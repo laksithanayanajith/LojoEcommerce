@@ -20,6 +20,7 @@
 		51CB5D9E2BAA9F8A000725ED /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D9D2BAA9F8A000725ED /* ItemViewModel.swift */; };
 		51CB5DA12BAAB9FA000725ED /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5DA02BAAB9FA000725ED /* ImageModel.swift */; };
 		51CB5DA32BAABE1E000725ED /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5DA22BAABE1E000725ED /* ImageViewModel.swift */; };
+		51CB5DA52BAAC60B000725ED /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5DA42BAAC60B000725ED /* SearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		51CB5D9F2BAAA1A7000725ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51CB5DA02BAAB9FA000725ED /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		51CB5DA22BAABE1E000725ED /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
+		51CB5DA42BAAC60B000725ED /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				51CB5D8D2BAA9A68000725ED /* WelcomeView.swift */,
 				51CB5D8F2BAA9A77000725ED /* HomeView.swift */,
 				51CB5D912BAA9A88000725ED /* ItemView.swift */,
+				51CB5DA42BAAC60B000725ED /* SearchView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51CB5D942BAA9A9F000725ED /* ItemModel.swift in Sources */,
+				51CB5DA52BAAC60B000725ED /* SearchView.swift in Sources */,
 				51CB5D902BAA9A77000725ED /* HomeView.swift in Sources */,
 				51CB5D8E2BAA9A68000725ED /* WelcomeView.swift in Sources */,
 				51CB5D922BAA9A88000725ED /* ItemView.swift in Sources */,
