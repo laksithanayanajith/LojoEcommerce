@@ -8,17 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		51CB5D7D2BAA99E9000725ED /* LojoEcommerceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D7C2BAA99E9000725ED /* LojoEcommerceApp.swift */; };
-		51CB5D7F2BAA99E9000725ED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D7E2BAA99E9000725ED /* ContentView.swift */; };
 		51CB5D812BAA99EA000725ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51CB5D802BAA99EA000725ED /* Assets.xcassets */; };
 		51CB5D842BAA99EA000725ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51CB5D832BAA99EA000725ED /* Preview Assets.xcassets */; };
+		51CB5D8E2BAA9A68000725ED /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D8D2BAA9A68000725ED /* WelcomeView.swift */; };
+		51CB5D902BAA9A77000725ED /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D8F2BAA9A77000725ED /* HomeView.swift */; };
+		51CB5D922BAA9A88000725ED /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D912BAA9A88000725ED /* ItemView.swift */; };
+		51CB5D942BAA9A9F000725ED /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D932BAA9A9F000725ED /* ItemModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		51CB5D792BAA99E9000725ED /* LojoEcommerce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LojoEcommerce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51CB5D7C2BAA99E9000725ED /* LojoEcommerceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LojoEcommerceApp.swift; sourceTree = "<group>"; };
-		51CB5D7E2BAA99E9000725ED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		51CB5D802BAA99EA000725ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51CB5D832BAA99EA000725ED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		51CB5D8D2BAA9A68000725ED /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		51CB5D8F2BAA9A77000725ED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		51CB5D912BAA9A88000725ED /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
+		51CB5D932BAA9A9F000725ED /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +41,9 @@
 		51CB5D702BAA99E9000725ED = {
 			isa = PBXGroup;
 			children = (
+				51CB5D8C2BAA9A4D000725ED /* ViewModel */,
+				51CB5D8B2BAA9A3E000725ED /* Model */,
+				51CB5D8A2BAA9A2E000725ED /* View */,
 				51CB5D7B2BAA99E9000725ED /* LojoEcommerce */,
 				51CB5D7A2BAA99E9000725ED /* Products */,
 			);
@@ -52,7 +61,6 @@
 			isa = PBXGroup;
 			children = (
 				51CB5D7C2BAA99E9000725ED /* LojoEcommerceApp.swift */,
-				51CB5D7E2BAA99E9000725ED /* ContentView.swift */,
 				51CB5D802BAA99EA000725ED /* Assets.xcassets */,
 				51CB5D822BAA99EA000725ED /* Preview Content */,
 			);
@@ -65,6 +73,31 @@
 				51CB5D832BAA99EA000725ED /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		51CB5D8A2BAA9A2E000725ED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				51CB5D8D2BAA9A68000725ED /* WelcomeView.swift */,
+				51CB5D8F2BAA9A77000725ED /* HomeView.swift */,
+				51CB5D912BAA9A88000725ED /* ItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		51CB5D8B2BAA9A3E000725ED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				51CB5D932BAA9A9F000725ED /* ItemModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		51CB5D8C2BAA9A4D000725ED /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +170,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51CB5D7F2BAA99E9000725ED /* ContentView.swift in Sources */,
+				51CB5D942BAA9A9F000725ED /* ItemModel.swift in Sources */,
+				51CB5D902BAA9A77000725ED /* HomeView.swift in Sources */,
+				51CB5D8E2BAA9A68000725ED /* WelcomeView.swift in Sources */,
+				51CB5D922BAA9A88000725ED /* ItemView.swift in Sources */,
 				51CB5D7D2BAA99E9000725ED /* LojoEcommerceApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

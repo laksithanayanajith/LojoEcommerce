@@ -11,7 +11,9 @@ import SwiftUI
 struct LojoEcommerceApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView{
+                WelcomeView()
+            }
         }
     }
 }
