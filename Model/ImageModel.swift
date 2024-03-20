@@ -1,27 +1,33 @@
 //
-//  ItemModel.swift
+//  ImageModel.swift
 //  LojoEcommerce
 //
 //  Created by NIBM-LAB04-PC05 on 2024-03-20.
 //
+
 import Foundation
 
-struct ItemElement: Identifiable, Codable {
+import Foundation
+
+struct ImageElement: Codable {
     let id: Int
-    let name: String
-    let description: String
-    let price: Double
-    let category: String
-    let addedDate: String
-    let selectedItem: JSONNullItems?
-    let images: JSONNullItems?
-    let colors: JSONNullItems?
-    let sizes: JSONNullItems?
+    let url: URL
+    let itemId: Int
+    let item: String?
+    let colorId, sizeId: Int
+
+    enum CodingKeys: String, CodingKey {
+        case id, url
+        case itemId = "itemID"
+        case item
+        case colorId = "colorID"
+        case sizeId = "sizeID"
+    }
 }
 
-typealias Item = [ItemElement]
+typealias Image = [ImageElement]
 
-class JSONNullItems: Identifiable, Codable {
+class JSONNullImages: Codable {
     init() {}
     required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
