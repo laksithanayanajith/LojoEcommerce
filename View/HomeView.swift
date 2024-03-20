@@ -33,17 +33,11 @@ struct HomeView: View {
         }
         .onAppear {
             Task {
-                do {
-                    // Call the async function to fetch items
-                    try await fetchItems { items in
-                        if let items = items {
-                            // Update the state variable with the fetched items
-                            self.items = items
-                        }
+                await fetchItems { items in
+                    if let items = items {
+                        // Update the state variable with the fetched items
+                        self.items = items
                     }
-                } catch {
-                    // Handle other errors
-                    print("Error fetching items: \(error)")
                 }
             }
             
@@ -55,22 +49,27 @@ struct HomeView: View {
         
         var body: some View {
             Rectangle()
-                .foregroundColor(Color.black.opacity(0.8))
+                .foregroundColor(Color.gray)
                 .frame(minWidth: 100, maxWidth: 250, minHeight: 100, maxHeight: 250)
                 .cornerRadius(20)
                 .padding(5)
                 .frame(maxWidth: .infinity)
+                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
                 .overlay(
                     VStack {
                         Text(item.name)
-                            .font(.headline)
+                            .font(.callout)
+                            .fontWeight(.medium)
                             .foregroundColor(.white)
                             .padding(.bottom, 5)
                         Text(item.description)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                            .font(.caption2)
+                            .foregroundColor(.white)
+                        Text("\n$" + String(format: "%.2f", item.price))
+                            .font(.headline)
+                            .foregroundColor(.secondary)
                     }
-                        .padding()
+                    .padding()
                 )
         }
     }

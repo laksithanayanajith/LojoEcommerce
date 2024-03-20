@@ -31,14 +31,21 @@ func fetchItems(completion: @escaping ([ItemElement]?) -> Void) async {
     let authString = "Basic \(base64LoginData)"
     request.setValue(authString, forHTTPHeaderField: "Authorization")
     
-    do {
-        let (data, _) = try await URLSession.shared.data(for: request)
-        let itemsResponse = try JSONDecoder().decode(ItemsResponse.self, from: data)
-        completion(itemsResponse.items)
-    } catch {
-        print("Error fetching items: \(error)")
-        completion(nil)
-    }
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        guard let data = data else {
+            print("No data received: \(error?.localizedDescription ?? "Unknown error")")
+            completion(nil)
+            return
+        }
+        
+        do {
+            let items = try JSONDecoder().decode([ItemElement].self, from: data)
+            completion(items)
+        } catch {
+            print("Error decoding JSON: \(error)")
+            completion(nil)
+        }
+    }.resume()
 }
 
 func fetchItemsById(id: Int) async throws -> ItemElement? {
