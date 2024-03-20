@@ -14,6 +14,10 @@
 		51CB5D902BAA9A77000725ED /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D8F2BAA9A77000725ED /* HomeView.swift */; };
 		51CB5D922BAA9A88000725ED /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D912BAA9A88000725ED /* ItemView.swift */; };
 		51CB5D942BAA9A9F000725ED /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D932BAA9A9F000725ED /* ItemModel.swift */; };
+		51CB5D972BAA9F3C000725ED /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 51CB5D962BAA9F3C000725ED /* URLImage */; };
+		51CB5D992BAA9F3C000725ED /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = 51CB5D982BAA9F3C000725ED /* URLImageStore */; };
+		51CB5D9C2BAA9F47000725ED /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 51CB5D9B2BAA9F47000725ED /* Kingfisher */; };
+		51CB5D9E2BAA9F8A000725ED /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D9D2BAA9F8A000725ED /* ItemViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +29,8 @@
 		51CB5D8F2BAA9A77000725ED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		51CB5D912BAA9A88000725ED /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		51CB5D932BAA9A9F000725ED /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
+		51CB5D9D2BAA9F8A000725ED /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
+		51CB5D9F2BAAA1A7000725ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +38,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51CB5D9C2BAA9F47000725ED /* Kingfisher in Frameworks */,
+				51CB5D992BAA9F3C000725ED /* URLImageStore in Frameworks */,
+				51CB5D972BAA9F3C000725ED /* URLImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +69,7 @@
 		51CB5D7B2BAA99E9000725ED /* LojoEcommerce */ = {
 			isa = PBXGroup;
 			children = (
+				51CB5D9F2BAAA1A7000725ED /* Info.plist */,
 				51CB5D7C2BAA99E9000725ED /* LojoEcommerceApp.swift */,
 				51CB5D802BAA99EA000725ED /* Assets.xcassets */,
 				51CB5D822BAA99EA000725ED /* Preview Content */,
@@ -96,6 +106,7 @@
 		51CB5D8C2BAA9A4D000725ED /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				51CB5D9D2BAA9F8A000725ED /* ItemViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -116,6 +127,11 @@
 			dependencies = (
 			);
 			name = LojoEcommerce;
+			packageProductDependencies = (
+				51CB5D962BAA9F3C000725ED /* URLImage */,
+				51CB5D982BAA9F3C000725ED /* URLImageStore */,
+				51CB5D9B2BAA9F47000725ED /* Kingfisher */,
+			);
 			productName = LojoEcommerce;
 			productReference = 51CB5D792BAA99E9000725ED /* LojoEcommerce.app */;
 			productType = "com.apple.product-type.application";
@@ -144,6 +160,10 @@
 				Base,
 			);
 			mainGroup = 51CB5D702BAA99E9000725ED;
+			packageReferences = (
+				51CB5D952BAA9F3C000725ED /* XCRemoteSwiftPackageReference "url-image" */,
+				51CB5D9A2BAA9F47000725ED /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 51CB5D7A2BAA99E9000725ED /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -175,6 +195,7 @@
 				51CB5D8E2BAA9A68000725ED /* WelcomeView.swift in Sources */,
 				51CB5D922BAA9A88000725ED /* ItemView.swift in Sources */,
 				51CB5D7D2BAA99E9000725ED /* LojoEcommerceApp.swift in Sources */,
+				51CB5D9E2BAA9F8A000725ED /* ItemViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +331,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"LojoEcommerce/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LojoEcommerce/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -338,6 +360,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"LojoEcommerce/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LojoEcommerce/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -378,6 +401,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		51CB5D952BAA9F3C000725ED /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
+		51CB5D9A2BAA9F47000725ED /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		51CB5D962BAA9F3C000725ED /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51CB5D952BAA9F3C000725ED /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+		51CB5D982BAA9F3C000725ED /* URLImageStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51CB5D952BAA9F3C000725ED /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImageStore;
+		};
+		51CB5D9B2BAA9F47000725ED /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 51CB5D9A2BAA9F47000725ED /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 51CB5D712BAA99E9000725ED /* Project object */;
 }
