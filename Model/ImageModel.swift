@@ -7,9 +7,7 @@
 
 import Foundation
 
-import Foundation
-
-struct ImageElement: Codable {
+struct ImageElement: Identifiable, Codable {
     let id: Int
     let url: URL
     let itemId: Int
@@ -27,7 +25,7 @@ struct ImageElement: Codable {
 
 typealias Image = [ImageElement]
 
-class JSONNullImages: Codable {
+class JSONNullImages: Identifiable, Codable {
     init() {}
     required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
