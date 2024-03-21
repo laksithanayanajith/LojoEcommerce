@@ -75,6 +75,25 @@ struct SearchView: View {
                             RoundedRectangle(cornerRadius: 50)
                                 .stroke(sortOption == .addedDate ? Color.black : Color.gray, lineWidth: 1)
                         )
+                        
+                        Button(action: {
+                            // Handle button action here
+                        }) {
+                            if let imageURL = URL(string: "https://img.icons8.com/ios-filled/50/filter--v1.png") {
+                                URLImage(imageURL) { image in
+                                    image
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .scaledToFit()
+                                }
+                            } else {
+                                // Placeholder image or error handling if URL is invalid
+                                Text("Image Not Found")
+                            }
+                        }
+                        .padding(.vertical)
+
+                        
                     }
                     .padding(.bottom)
 
