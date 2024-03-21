@@ -47,6 +47,29 @@ struct FilterOptionsView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+                
+                Section(header: Text("Category")) {
+                    Button("Leather") {
+                        let filteredItems = items.filter { $0.category == "Leather" }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    Button("Denim") {
+                        let filteredItems = items.filter { $0.category == "Denim" }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    Button("Peacoats") {
+                        let filteredItems = items.filter { $0.category == "Peacoats" }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    Button("Sports") {
+                        let filteredItems = items.filter { $0.category == "Sports" }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
             }
             .listStyle(GroupedListStyle())
             .navigationTitle("Filter Jackets")
