@@ -15,6 +15,7 @@ struct SearchView: View {
     @State private var items: [ItemElement] = []
     @State private var sortOption: SortOption = .price
     @State private var isFilterPresented = false
+    @State private var filteredItems: [ItemElement] = []
     
     var body: some View {
         ZStack {
@@ -92,7 +93,9 @@ struct SearchView: View {
                         .padding(.vertical)
                         .opacity(0.9)
                         .sheet(isPresented: $isFilterPresented) {
-                            FilterView()
+                            FilterView(items: $items, onFilterApplied: { filteredItems in
+                                self.items = filteredItems
+                            })
                         }
 
                         
@@ -128,6 +131,9 @@ struct SearchView: View {
                     }
                 }
             }
+        }
+        .onChange(of: filteredItems) { newValue in
+            self.items = newValue
         }
     }
     
@@ -166,6 +172,10 @@ struct SearchView: View {
             }
         }
     }
+    
+    private func applyFilter(filteredItems: [ItemElement]) {
+           self.filteredItems = filteredItems
+       }
 }
 
 struct RectangleItemView: View {
@@ -212,6 +222,7 @@ enum SortOption {
     case price
     case addedDate
 }
+
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {

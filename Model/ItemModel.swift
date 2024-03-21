@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct ItemElement: Identifiable, Codable {
+struct ItemElement: Identifiable, Codable, Equatable {
     let id: Int
     let name: String
     let description: String
@@ -20,18 +20,10 @@ struct ItemElement: Identifiable, Codable {
     let sizes: JSONNullItems?
 }
 
-typealias Item = [ItemElement]
-
-class JSONNullItems: Identifiable, Codable {
+class JSONNullItems: Identifiable, Codable, Equatable {
     init() {}
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if !container.decodeNil() {
-            throw DecodingError.typeMismatch(JSONNullItems.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-        }
-    }
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encodeNil()
+    static func == (lhs: JSONNullItems, rhs: JSONNullItems) -> Bool {
+        return true
     }
 }
+

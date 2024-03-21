@@ -9,62 +9,60 @@ import SwiftUI
 
 struct FilterView: View {
     
-    @State private var isFilterPresented = false
+    @Binding var items: [ItemElement]
+    var onFilterApplied: (([ItemElement]) -> Void)
         
     var body: some View {
-        FilterOptionsView()
+        FilterOptionsView(items: $items, onFilterApplied: onFilterApplied)
     }
 }
 
 struct FilterOptionsView: View {
-    
     @Environment(\.presentationMode) var presentationMode
+    @Binding var items: [ItemElement]
+    var onFilterApplied: (([ItemElement]) -> Void)
     
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("Price")) {
                     Button("< $155.00") {
-                        // Handle price option action
+                        let filteredItems = items.filter { $0.price < 155.00 }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
                     }
                     Button("$155.00 - $160.00") {
-                        // Handle price option action
+                        let filteredItems = items.filter { $0.price >= 155.00 && $0.price <= 160.00 }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
                     }
                     Button("$161.00 - $185.00") {
-                        // Handle price option action
+                        let filteredItems = items.filter { $0.price >= 161.00 && $0.price <= 185.00 }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
                     }
                     Button("> $190.00") {
-                        // Handle price option action
-                    }
-                }
-                Section(header: Text("Category")) {
-                    Button("Leather") {
-                        // Handle category option action
-                    }
-                    Button("Denim") {
-                        // Handle category option action
-                    }
-                    Button("Peacoats") {
-                        // Handle category option action
-                    }
-                    Button("Sports") {
-                        // Handle category option action
+                        let filteredItems = items.filter { $0.price > 190.00 }
+                        self.items = filteredItems
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
             }
             .listStyle(GroupedListStyle())
             .navigationTitle("Filter Jackets")
             .navigationBarItems(trailing:
-                Button("Close") {
-                    presentationMode.wrappedValue.dismiss()
-                }
+                                    Button("Close") {
+                                        presentationMode.wrappedValue.dismiss()
+                                    }
             )
         }
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        FilterView()
+    
+    struct FilterView_Previews: PreviewProvider {
+        static var previews: some View {
+            let items: [ItemElement] = []
+            FilterView(items: .constant(items)) { filteredItems in filteredItems }
+        }
     }
+
 }
