@@ -6,44 +6,20 @@
 //
 
 import SwiftUI
-import URLImage
 
 struct FilterView: View {
+    
     @State private var isFilterPresented = false
         
-        var body: some View {
-            NavigationView {
-                List {
-                    Button("Price") {
-                        // Handle price button action
-                    }
-                    Button("Category") {
-                        // Handle category button action
-                    }
-                }
-                .listStyle(GroupedListStyle())
-                .navigationTitle("Filter")
-                .navigationBarItems(trailing:
-                    Button(action: {
-                        isFilterPresented.toggle()
-                    }) {
-                        URLImage(URL(string: "https://img.icons8.com/ios/50/delete-sign--v1.png")!) { image in
-                            image
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
-                )
-            }
-            .sheet(isPresented: $isFilterPresented) {
-                // Your filter options UI goes here
-                FilterOptionsView()
-            }
-        }
+    var body: some View {
+        FilterOptionsView()
+    }
 }
 
 struct FilterOptionsView: View {
+    
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationView {
             List {
@@ -77,10 +53,10 @@ struct FilterOptionsView: View {
                 }
             }
             .listStyle(GroupedListStyle())
-            .navigationTitle("Filter Options")
+            .navigationTitle("Filter Jackets")
             .navigationBarItems(trailing:
                 Button("Close") {
-                    // Handle close action
+                    presentationMode.wrappedValue.dismiss()
                 }
             )
         }
