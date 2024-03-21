@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5166D1192BAC0CB90063BE17 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166D1182BAC0CB90063BE17 /* FilterView.swift */; };
 		51CB5D7D2BAA99E9000725ED /* LojoEcommerceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CB5D7C2BAA99E9000725ED /* LojoEcommerceApp.swift */; };
 		51CB5D812BAA99EA000725ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51CB5D802BAA99EA000725ED /* Assets.xcassets */; };
 		51CB5D842BAA99EA000725ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51CB5D832BAA99EA000725ED /* Preview Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5166D1182BAC0CB90063BE17 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		51CB5D792BAA99E9000725ED /* LojoEcommerce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LojoEcommerce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51CB5D7C2BAA99E9000725ED /* LojoEcommerceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LojoEcommerceApp.swift; sourceTree = "<group>"; };
 		51CB5D802BAA99EA000725ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				51CB5D8F2BAA9A77000725ED /* HomeView.swift */,
 				51CB5D912BAA9A88000725ED /* ItemView.swift */,
 				51CB5DA42BAAC60B000725ED /* SearchView.swift */,
+				5166D1182BAC0CB90063BE17 /* FilterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				51CB5D7D2BAA99E9000725ED /* LojoEcommerceApp.swift in Sources */,
 				51CB5D9E2BAA9F8A000725ED /* ItemViewModel.swift in Sources */,
 				51CB5DA32BAABE1E000725ED /* ImageViewModel.swift in Sources */,
+				5166D1192BAC0CB90063BE17 /* FilterView.swift in Sources */,
 				51CB5DA12BAAB9FA000725ED /* ImageModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,6 +14,7 @@ struct SearchView: View {
     @State private var isLoading = true
     @State private var items: [ItemElement] = []
     @State private var sortOption: SortOption = .price
+    @State private var isFilterPresented = false
     
     var body: some View {
         ZStack {
@@ -77,7 +78,7 @@ struct SearchView: View {
                         )
                         
                         Button(action: {
-                            // Handle button action here
+                            isFilterPresented.toggle()
                         }) {
                             if let imageURL = URL(string: "https://img.icons8.com/ios-filled/50/filter--v1.png") {
                                 URLImage(imageURL) { image in
@@ -86,12 +87,13 @@ struct SearchView: View {
                                         .frame(width: 25, height: 25)
                                         .scaledToFit()
                                 }
-                            } else {
-                                // Placeholder image or error handling if URL is invalid
-                                Text("Image Not Found")
                             }
                         }
                         .padding(.vertical)
+                        .opacity(0.9)
+                        .sheet(isPresented: $isFilterPresented) {
+                            FilterView()
+                        }
 
                         
                     }
