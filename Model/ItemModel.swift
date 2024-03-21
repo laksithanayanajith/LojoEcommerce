@@ -12,6 +12,7 @@ struct ItemElement: Identifiable, Codable {
     let description: String
     let price: Double
     let category: String
+    let defaultImage: String
     let addedDate: String
     let selectedItem: JSONNullItems?
     let images: JSONNullItems?
