@@ -1,3 +1,11 @@
+
+//
+//  SearchView.swift
+//  LojoEcommerce
+//
+//  Created by NIBM-LAB04-PC05 on 2024-03-20.
+//
+
 import SwiftUI
 import URLImage
 
@@ -74,63 +82,25 @@ struct HomeView: View {
                         }
                         
                         VStack(alignment: .leading, spacing: 5) {
+                            Text("$\(String(format: "%.2f", item.price))")
+                                .font(.headline)
+                                .foregroundColor(.black)
+                                .opacity(0.9)
                             Text(item.name)
-                                .font(.callout)
-                                .fontWeight(.medium)
+                                .font(.caption)
+                                .fontWeight(.bold)
                                 .foregroundColor(.gray)
                                 .padding(.bottom, 5)
                             Text(item.description)
                                 .font(.caption2)
                                 .foregroundColor(.gray)
-                                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-                            Text("$\(String(format: "%.2f", item.price))")
-                                .font(.headline)
-                                .foregroundColor(.black)
-                                .opacity(0.65)
+                                .opacity(0.8)
                         }
                         .padding()
                     }
                 )
         }
     }
-
-    
-    /*
-    struct RectangleItemView: View {
-        let item: ItemElement
-        
-        var body: some View {
-            VStack {
-                URLImage(URL(string: item.defaultImage)!) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(minWidth: 100, maxWidth: 250, minHeight: 100, maxHeight: 150) // Adjust size as needed
-                }
-                .padding(5)
-                .background(Color.gray.opacity(0.8))
-                .cornerRadius(20)
-                .overlay(
-                    VStack {
-                        Text(item.name)
-                            .font(.callout)
-                            .fontWeight(.medium)
-                            .foregroundColor(.white)
-                            .padding(.bottom, 5)
-                        Text(item.description)
-                            .font(.caption2)
-                            .foregroundColor(.white)
-                        Text("\n$" + String(format: "%.2f", item.price))
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding()
-                )
-            }
-            .padding()
-        }
-    }
-*/
     
        struct HomeView_Previews: PreviewProvider {
         static var previews: some View {
