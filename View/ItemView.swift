@@ -41,10 +41,9 @@ struct ItemView: View {
                     Button(action: {
                     }) {
                         Text("S")
-                            .padding(15)
                     }
                     .foregroundColor(isClicked == true ? Color.white : Color.black)
-                    .frame(maxWidth: .infinity)
+                    .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)
@@ -56,10 +55,9 @@ struct ItemView: View {
                     Button(action: {
                     }) {
                         Text("M")
-                            .padding(15)
                     }
                     .foregroundColor(isClicked == true ? Color.white : Color.black)
-                    .frame(maxWidth: .infinity)
+                    .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)
@@ -71,25 +69,9 @@ struct ItemView: View {
                     Button(action: {
                     }) {
                         Text("L")
-                            .padding(15)
                     }
                     .foregroundColor(isClicked == true ? Color.white : Color.black)
-                    .frame(maxWidth: .infinity)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50)
-                            .stroke(Color.black, lineWidth: 1)
-                    )
-                    .background(isClicked == true ? Color.black : Color.white)
-                    .cornerRadius(50)
-                    .padding(.horizontal)
-                    
-                    Button(action: {
-                    }) {
-                        Text("L")
-                            .padding(15)
-                    }
-                    .foregroundColor(isClicked == true ? Color.white : Color.black)
-                    .frame(maxWidth: .infinity)
+                    .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)

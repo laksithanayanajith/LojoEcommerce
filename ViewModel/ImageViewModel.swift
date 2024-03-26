@@ -42,9 +42,9 @@ func fetchImageURL(itemId: Int, sizeId: Int, colorId: Int, completion: @escaping
     }
 }
 
-func fetchImageURL(itemID: Int, completion: @escaping (String?) -> Void) async {
+func fetchImageURL(itemID: Int, sizeId: Int, colorId: Int, completion: @escaping (String?) -> Void) async {
     let baseURLString = "http://laksithanibm-001-site1.jtempurl.com/api/images/image"
-    let urlString = "\(baseURLString)?itemId=\(itemID)"
+    let urlString = "\(baseURLString)?itemId=\(itemID)&sizeId=\(sizeId)&colorId=\(colorId)"
     
     guard let url = URL(string: urlString) else {
         print("Invalid URL: \(urlString)")
