@@ -13,51 +13,55 @@ struct HomeView: View {
     
     @State private var isLoading = true
     @State private var items: [ItemElement] = []
+    @State private var selectedItem: ItemElement?
+    @State private var isItemViewActive = false
     
     var body: some View {
         ZStack {
-            VStack {
-                
-                if isLoading {
-                    ProgressView()
+            NavigationView {
+                VStack {
+                    if isLoading {
+                        ProgressView()
+                    } else {
+                        Text("LOJO")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                        
+                        HStack {
+                            VStack {
+                                ForEach(items.filter { $0.id % 2 == 0 }) { item in
+                                    NavigationLink(destination: ItemView(itemId: item.id)) {
+                                        RectangleItemView(item: item)
+                                    }
+                                }
+                            }
+                            
+                            VStack {
+                                ForEach(items.filter { $0.id % 2 != 0 }) { item in
+                                    NavigationLink(destination: ItemView(itemId: item.id)) {
+                                        RectangleItemView(item: item)
+                                    }
+                                }
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                    }
                 }
-                
-                if !isLoading {
-                    Text("LOJO")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                }
-                
-                HStack {
-                    VStack {
-                        ForEach(items.filter { $0.id % 2 == 0 }) { item in
-                            RectangleItemView(item: item)
+                .onAppear {
+                    Task {
+                        await fetchItems { items in
+                            isLoading = false
+                            if let items = items {
+                                self.items = items
+                            }
                         }
                     }
-                    
-                    VStack {
-                        ForEach(items.filter { $0.id % 2 != 0 }) { item in
-                            RectangleItemView(item: item)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .onAppear {
-            Task {
-                await fetchItems { items in
-                    isLoading = false
-                    if let items = items {
-                        self.items = items
-                    }
                 }
             }
-            
+            .navigationBarBackButtonHidden(true)
         }
     }
     
@@ -73,14 +77,12 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .opacity(0.8)
                 .overlay(
-                    
                     VStack(spacing: 0) {
                         URLImage(URL(string: item.defaultImage)!) { image in
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         }
-                        
                         VStack(alignment: .leading, spacing: 5) {
                             Text("$\(String(format: "%.2f", item.price))")
                                 .font(.headline)
@@ -102,7 +104,7 @@ struct HomeView: View {
         }
     }
     
-       struct HomeView_Previews: PreviewProvider {
+    struct HomeView_Previews: PreviewProvider {
         static var previews: some View {
             HomeView()
         }

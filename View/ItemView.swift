@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct ItemView: View {
+    let itemId: Int
+    @State private var item: ItemElement?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if let item = item {
+            VStack {
+                // Display item details here
+                Text("Item Name: \(item.name)")
+                Text("Description: \(item.description)")
+                Text("Price: $\(String(format: "%.2f", item.price))")
+            }
+            .padding()
+            .navigationBarTitle("Item Details", displayMode: .inline)
+        } else {
+            ProgressView()
+                .onAppear {
+                    Task{
+                        await fetchItem(byID: itemId) { fetchedItem in
+                            self.item = fetchedItem
+                        }
+                    }
+                }
+        }
     }
 }
 
-#Preview {
-    ItemView()
+struct ItemView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            ItemView(itemId: 1)
+        }
+    }
 }

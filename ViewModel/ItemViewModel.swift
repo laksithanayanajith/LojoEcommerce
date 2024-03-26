@@ -149,3 +149,34 @@ func fetchItemsByAddedDate(completion: @escaping ([ItemElement]?) -> Void) async
         completion(nil)
     }
 }
+
+func fetchItem(byID id: Int, completion: @escaping (ItemElement?) -> Void) async {
+    let urlString = "http://laksithanibm-001-site1.jtempurl.com/api/items/\(id)"
+    guard let url = URL(string: urlString) else {
+        print("Invalid URL: \(urlString)")
+        completion(nil)
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    
+    // Create a base64-encoded credential string
+    let username = "11168044"
+    let password = "60-dayfreetrial"
+    let loginData = "\(username):\(password)".data(using: .utf8)!
+    let base64LoginData = loginData.base64EncodedString()
+    
+    // Attach the Authorization header with the basic authentication credentials
+    let authString = "Basic \(base64LoginData)"
+    request.setValue(authString, forHTTPHeaderField: "Authorization")
+    
+    do {
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let item = try JSONDecoder().decode(ItemElement.self, from: data)
+        completion(item)
+    } catch {
+        print("Error fetching item by ID: \(error)")
+        completion(nil)
+    }
+}
