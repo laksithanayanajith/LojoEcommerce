@@ -6,20 +6,128 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct ItemView: View {
     let itemId: Int
     @State private var isLoading = true
     @State private var item: ItemElement?
+    @State private var isShowDefaultImage: Bool = true
+    @State private var isClicked: Bool = false
     
     var body: some View {
         VStack {
             if isLoading {
                 ProgressView()
             } else if let item = item {
-                Text("Item Name: \(item.name)")
-                Text("Description: \(item.description)")
-                Text("Price: $\(String(format: "%.2f", item.price))")
+                if isShowDefaultImage{
+                    if let imageURL = URL(string: item.defaultImage) {
+                        URLImage(imageURL) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                    }
+                }
+                else{
+                    
+                   
+                }
+                
+                HStack{
+                    
+                    Button(action: {
+                    }) {
+                        Text("S")
+                            .padding(15)
+                    }
+                    .foregroundColor(isClicked == true ? Color.white : Color.black)
+                    .frame(maxWidth: .infinity)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .background(isClicked == true ? Color.black : Color.white)
+                    .cornerRadius(50)
+                    .padding(.horizontal)
+                    
+                    Button(action: {
+                    }) {
+                        Text("M")
+                            .padding(15)
+                    }
+                    .foregroundColor(isClicked == true ? Color.white : Color.black)
+                    .frame(maxWidth: .infinity)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .background(isClicked == true ? Color.black : Color.white)
+                    .cornerRadius(50)
+                    .padding(.horizontal)
+                    
+                    Button(action: {
+                    }) {
+                        Text("L")
+                            .padding(15)
+                    }
+                    .foregroundColor(isClicked == true ? Color.white : Color.black)
+                    .frame(maxWidth: .infinity)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .background(isClicked == true ? Color.black : Color.white)
+                    .cornerRadius(50)
+                    .padding(.horizontal)
+                    
+                    Button(action: {
+                    }) {
+                        Text("L")
+                            .padding(15)
+                    }
+                    .foregroundColor(isClicked == true ? Color.white : Color.black)
+                    .frame(maxWidth: .infinity)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .background(isClicked == true ? Color.black : Color.white)
+                    .cornerRadius(50)
+                    .padding(.horizontal)
+                }
+                
+                Text((item.name) + "\n")
+                    .font(.headline)
+                    .fontWeight(.medium)
+                    .opacity(0.5)
+                    .padding(.horizontal)
+                Text("$\(String(format: "%.2f", item.price))")
+                    .font(.system(.largeTitle))
+                    .fontWeight(.bold)
+                    .padding(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(item.description)
+                    .font(.footnote)
+                    .fontWeight(.medium)
+                    .opacity(0.8)
+                
+                Button(action: {
+                }) {
+                    Text("Add To Cart")
+                        .padding(15)
+                }
+                .foregroundColor(Color.white)
+                .frame(maxWidth: .infinity)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 50)
+                        .stroke(Color.black, lineWidth: 1)
+                )
+                .background(Color.black)
+                .cornerRadius(50)
+                .padding()
             }
         }
         .padding()

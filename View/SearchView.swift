@@ -13,7 +13,7 @@ struct SearchView: View {
     @State private var searchQuery = ""
     @State private var isLoading = true
     @State private var items: [ItemElement] = []
-    @State private var sortOption: SortOption = .price
+    @State private var sortOption: SortOption?
     @State private var isFilterPresented = false
     @State private var filteredItems: [ItemElement] = []
     
@@ -55,14 +55,14 @@ struct SearchView: View {
                                 Text("Price")
                                     .padding(12)
                             }
-                            .background(.white)
-                            .foregroundColor(sortOption == .price ? Color.black : Color.gray)
+                            .foregroundColor(sortOption == .price ? Color.white : Color.black)
                             .frame(maxWidth: 120)
-                            .cornerRadius(10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 50)
-                                    .stroke(sortOption == .price ? Color.black : Color.gray, lineWidth: 1)
+                                    .stroke(Color.black, lineWidth: 1)
                             )
+                            .background(sortOption == .price ? Color.black : Color.white)
+                            .cornerRadius(50)
                             
                             Button(action: {
                                 sortOption = .addedDate
@@ -71,13 +71,15 @@ struct SearchView: View {
                                 Text("Added Date")
                                     .padding(12)
                             }
-                            .foregroundColor(sortOption == .addedDate ? Color.black : Color.gray)
+                            .foregroundColor(sortOption == .addedDate ? Color.white : Color.black)
                             .frame(maxWidth: 190)
                             .cornerRadius(10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 50)
-                                    .stroke(sortOption == .addedDate ? Color.black : Color.gray, lineWidth: 1)
+                                    .stroke(Color.black, lineWidth: 1)
                             )
+                            .background(sortOption == .addedDate ? Color.black : Color.white)
+                            .cornerRadius(50)
                             
                             Button(action: {
                                 isFilterPresented.toggle()
