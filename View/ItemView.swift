@@ -4,16 +4,18 @@
 //
 //  Created by NIBM-LAB04-PC05 on 2024-03-20.
 //
-
 import SwiftUI
 import URLImage
 
 struct ItemView: View {
+    
     let itemId: Int
     @State private var isLoading = true
     @State private var item: ItemElement?
     @State private var isShowDefaultImage: Bool = true
-    @State private var isClicked: Bool = false
+    @State private var isClickedSmall: Bool = false
+    @State private var isClickedMedium: Bool = false
+    @State private var isClickedLarge: Bool = false
     
     var body: some View {
         VStack {
@@ -33,50 +35,77 @@ struct ItemView: View {
                 }
                 else{
                     
-                   
+                   //write code here for get required image url when click "S" or "M" or "L" button
                 }
                 
                 HStack{
                     
                     Button(action: {
+                        
+                        if isClickedSmall == false {
+                            isShowDefaultImage = true
+                        }
+                        
+                        isClickedSmall = !isClickedSmall
+                        isClickedMedium = false
+                        isClickedLarge = false
+                        
                     }) {
                         Text("S")
                     }
-                    .foregroundColor(isClicked == true ? Color.white : Color.black)
+                    .foregroundColor(isClickedSmall == true ? Color.white : Color.black)
                     .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)
                     )
-                    .background(isClicked == true ? Color.black : Color.white)
+                    .background(isClickedSmall == true ? Color.black : Color.white)
                     .cornerRadius(50)
                     .padding(.horizontal)
                     
                     Button(action: {
+                        
+                        if isClickedMedium == false {
+                            isShowDefaultImage = true
+                        }
+                        
+                        isClickedSmall = false
+                        isClickedMedium = !isClickedMedium
+                        isClickedLarge = false
+                        
                     }) {
                         Text("M")
                     }
-                    .foregroundColor(isClicked == true ? Color.white : Color.black)
+                    .foregroundColor(isClickedMedium == true ? Color.white : Color.black)
                     .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)
                     )
-                    .background(isClicked == true ? Color.black : Color.white)
+                    .background(isClickedMedium == true ? Color.black : Color.white)
                     .cornerRadius(50)
                     .padding(.horizontal)
                     
                     Button(action: {
+                        
+                        if isClickedLarge == false {
+                            isShowDefaultImage = true
+                        }
+                        
+                        isClickedSmall = false
+                        isClickedMedium = false
+                        isClickedLarge = !isClickedLarge
+                        
                     }) {
                         Text("L")
                     }
-                    .foregroundColor(isClicked == true ? Color.white : Color.black)
+                    .foregroundColor(isClickedLarge == true ? Color.white : Color.black)
                     .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)
                     )
-                    .background(isClicked == true ? Color.black : Color.white)
+                    .background(isClickedLarge == true ? Color.black : Color.white)
                     .cornerRadius(50)
                     .padding(.horizontal)
                 }
