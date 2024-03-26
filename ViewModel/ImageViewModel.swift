@@ -7,12 +7,13 @@
 
 import Foundation
 
-func fetchImageURL(itemId: Int, sizeId: Int?, colorId: Int?, completion: @escaping (String?) -> Void) {
+import Foundation
+
+func fetchImageURL(itemId: Int, sizeId: Int?, colorId: Int?) async throws -> String? {
     let urlString = "http://laksithanibm-001-site1.jtempurl.com/api/images/image?itemId=\(itemId)&sizeId=\(sizeId ?? 0)&colorId=\(colorId ?? 0)"
     guard let url = URL(string: urlString) else {
         print("Invalid URL: \(urlString)")
-        completion(nil)
-        return
+        return nil
     }
     
     var request = URLRequest(url: url)
@@ -28,19 +29,17 @@ func fetchImageURL(itemId: Int, sizeId: Int?, colorId: Int?, completion: @escapi
     let authString = "Basic \(base64LoginData)"
     request.setValue(authString, forHTTPHeaderField: "Authorization")
     
-    URLSession.shared.dataTask(with: request) { data, response, error in
-        if let error = error {
-            print("Error fetching image: \(error)")
-            completion(nil)
-            return
-        }
+    do {
+        let (data, _) = try await URLSession.shared.data(for: request)
         
-        guard let data = data, let imageURLString = String(data: data, encoding: .utf8) else {
+        guard let imageURLString = String(data: data, encoding: .utf8) else {
             print("Invalid image URL data")
-            completion(nil)
-            return
+            return nil
         }
         
-        completion(imageURLString)
-    }.resume()
+        return imageURLString
+    } catch {
+        print("Error fetching image: \(error)")
+        return nil
+    }
 }

@@ -16,6 +16,8 @@ struct ItemView: View {
     @State private var isClickedSmall: Bool = false
     @State private var isClickedMedium: Bool = false
     @State private var isClickedLarge: Bool = false
+    @State private var selectedSizeId: Int?
+    @State private var itemImage: String?
     
     var body: some View {
         VStack {
@@ -49,6 +51,7 @@ struct ItemView: View {
                         isClickedSmall = !isClickedSmall
                         isClickedMedium = false
                         isClickedLarge = false
+                        selectedSizeId = 1
                         
                     }) {
                         Text("S")
@@ -72,6 +75,7 @@ struct ItemView: View {
                         isClickedSmall = false
                         isClickedMedium = !isClickedMedium
                         isClickedLarge = false
+                        selectedSizeId = 2
                         
                     }) {
                         Text("M")
@@ -95,6 +99,7 @@ struct ItemView: View {
                         isClickedSmall = false
                         isClickedMedium = false
                         isClickedLarge = !isClickedLarge
+                        selectedSizeId = 3
                         
                     }) {
                         Text("L")
