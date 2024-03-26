@@ -13,8 +13,6 @@ struct HomeView: View {
     
     @State private var isLoading = true
     @State private var items: [ItemElement] = []
-    @State private var selectedItem: ItemElement?
-    @State private var isItemViewActive = false
     
     var body: some View {
         ZStack {

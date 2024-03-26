@@ -19,121 +19,127 @@ struct SearchView: View {
     
     var body: some View {
         ZStack {
-            VStack {
-                if isLoading {
-                    ProgressView()
-                }
-                
-                if !isLoading {
-                    Text("LOJO")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                        .padding()
+            NavigationView {
+                VStack {
+                    if isLoading {
+                        ProgressView()
+                    }
                     
-                    Text("What Are You Looking For Today?")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
-                        .opacity(0.8)
-                    
-                    TextField("Search", text: $searchQuery, onCommit: {
-                        searchItems()
-                    })
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: .infinity, height: .infinity)
-                    .padding(.bottom)
-                    .padding(.horizontal)
-                    
-                    HStack {
-                        Button(action: {
-                            sortOption = .price
-                            fetchSearchItemsByPrice()
-                        }) {
-                            Text("Price")
-                                .padding(12)
-                        }
-                        .background(.white)
-                        .foregroundColor(sortOption == .price ? Color.black : Color.gray)
-                        .frame(maxWidth: 120)
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 50)
-                                .stroke(sortOption == .price ? Color.black : Color.gray, lineWidth: 1)
-                        )
+                    if !isLoading {
+                        Text("LOJO")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                            .padding()
                         
-                        Button(action: {
-                            sortOption = .addedDate
-                            fetchSearchItemsByAddedDate()
-                        }) {
-                            Text("Added Date")
-                                .padding(12)
-                        }
-                        .foregroundColor(sortOption == .addedDate ? Color.black : Color.gray)
-                        .frame(maxWidth: 190)
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 50)
-                                .stroke(sortOption == .addedDate ? Color.black : Color.gray, lineWidth: 1)
-                        )
+                        Text("What Are You Looking For Today?")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+                            .opacity(0.8)
                         
-                        Button(action: {
-                            isFilterPresented.toggle()
-                        }) {
-                            if let imageURL = URL(string: "https://img.icons8.com/ios-filled/50/filter--v1.png") {
-                                URLImage(imageURL) { image in
-                                    image
-                                        .resizable()
-                                        .frame(width: 25, height: 25)
-                                        .scaledToFit()
+                        TextField("Search", text: $searchQuery, onCommit: {
+                            searchItems()
+                        })
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: .infinity, height: .infinity)
+                        .padding(.bottom)
+                        .padding(.horizontal)
+                        
+                        HStack {
+                            Button(action: {
+                                sortOption = .price
+                                fetchSearchItemsByPrice()
+                            }) {
+                                Text("Price")
+                                    .padding(12)
+                            }
+                            .background(.white)
+                            .foregroundColor(sortOption == .price ? Color.black : Color.gray)
+                            .frame(maxWidth: 120)
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 50)
+                                    .stroke(sortOption == .price ? Color.black : Color.gray, lineWidth: 1)
+                            )
+                            
+                            Button(action: {
+                                sortOption = .addedDate
+                                fetchSearchItemsByAddedDate()
+                            }) {
+                                Text("Added Date")
+                                    .padding(12)
+                            }
+                            .foregroundColor(sortOption == .addedDate ? Color.black : Color.gray)
+                            .frame(maxWidth: 190)
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 50)
+                                    .stroke(sortOption == .addedDate ? Color.black : Color.gray, lineWidth: 1)
+                            )
+                            
+                            Button(action: {
+                                isFilterPresented.toggle()
+                            }) {
+                                if let imageURL = URL(string: "https://img.icons8.com/ios-filled/50/filter--v1.png") {
+                                    URLImage(imageURL) { image in
+                                        image
+                                            .resizable()
+                                            .frame(width: 25, height: 25)
+                                            .scaledToFit()
+                                    }
+                                }
+                            }
+                            .padding(.vertical)
+                            .opacity(0.9)
+                            .sheet(isPresented: $isFilterPresented) {
+                                FilterView(items: $items, onFilterApplied: { filteredItems in
+                                    self.items = filteredItems
+                                })
+                            }
+                            
+                            
+                        }
+                        .padding(.bottom)
+                        
+                        
+                        HStack {
+                            VStack {
+                                ForEach(items.filter { $0.id % 2 == 0 }) { item in
+                                    NavigationLink(destination: ItemView(itemId: item.id)) {
+                                        RectangleItemView(item: item)
+                                    }
+                                }
+                            }
+                            
+                            VStack {
+                                ForEach(items.filter { $0.id % 2 != 0 }) { item in
+                                    NavigationLink(destination: ItemView(itemId: item.id)) {
+                                        RectangleItemView(item: item)
+                                    }
                                 }
                             }
                         }
-                        .padding(.vertical)
-                        .opacity(0.9)
-                        .sheet(isPresented: $isFilterPresented) {
-                            FilterView(items: $items, onFilterApplied: { filteredItems in
-                                self.items = filteredItems
-                            })
-                        }
-
-                        
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
                     }
-                    .padding(.bottom)
-
-                    
-                    HStack {
-                        VStack {
-                            ForEach(items.filter { $0.id % 2 == 0 }) { item in
-                                RectangleItemView(item: item)
-                            }
-                        }
-                        
-                        VStack {
-                            ForEach(items.filter { $0.id % 2 != 0 }) { item in
-                                RectangleItemView(item: item)
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal)
                 }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
-        }
-        .onAppear {
-            Task {
-                await fetchItems { items in
-                    isLoading = false
-                    if let items = items {
-                        self.items = items
+            .onAppear {
+                Task {
+                    await fetchItems { items in
+                        isLoading = false
+                        if let items = items {
+                            self.items = items
+                        }
                     }
                 }
             }
-        }
-        .onChange(of: filteredItems) { newValue in
-            self.items = newValue
+            .onChange(of: filteredItems) { newValue in
+                self.items = newValue
+            }
         }
     }
     
