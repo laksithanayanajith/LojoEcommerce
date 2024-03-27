@@ -37,6 +37,8 @@ struct TabView: View {
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .frame(width: 30, height: 30)
+                                                                .opacity(0.9)
+                                                                .padding(.horizontal, 10)
                             }
                             Spacer()
                         }
