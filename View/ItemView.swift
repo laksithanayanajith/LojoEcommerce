@@ -16,8 +16,8 @@ struct ItemView: View {
     @State private var isClickedSmall: Bool = false
     @State private var isClickedMedium: Bool = false
     @State private var isClickedLarge: Bool = false
-    @State private var selectedSizeId: Int?
-    @State private var itemImage: String?
+    @State private var isClickedXLarge: Bool = false
+    @State private var isClickedXXLarge: Bool = false
     
     var body: some View {
         VStack {
@@ -51,7 +51,8 @@ struct ItemView: View {
                         isClickedSmall = !isClickedSmall
                         isClickedMedium = false
                         isClickedLarge = false
-                        selectedSizeId = 1
+                        isClickedXLarge = false
+                        isClickedXXLarge = false
                         
                     }) {
                         Text("S")
@@ -64,7 +65,6 @@ struct ItemView: View {
                     )
                     .background(isClickedSmall == true ? Color.black : Color.white)
                     .cornerRadius(50)
-                    .padding(.horizontal)
                     
                     Button(action: {
                         
@@ -75,7 +75,8 @@ struct ItemView: View {
                         isClickedSmall = false
                         isClickedMedium = !isClickedMedium
                         isClickedLarge = false
-                        selectedSizeId = 2
+                        isClickedXLarge = false
+                        isClickedXXLarge = false
                         
                     }) {
                         Text("M")
@@ -88,7 +89,6 @@ struct ItemView: View {
                     )
                     .background(isClickedMedium == true ? Color.black : Color.white)
                     .cornerRadius(50)
-                    .padding(.horizontal)
                     
                     Button(action: {
                         
@@ -99,7 +99,8 @@ struct ItemView: View {
                         isClickedSmall = false
                         isClickedMedium = false
                         isClickedLarge = !isClickedLarge
-                        selectedSizeId = 3
+                        isClickedXLarge = false
+                        isClickedXXLarge = false
                         
                     }) {
                         Text("L")
@@ -112,8 +113,55 @@ struct ItemView: View {
                     )
                     .background(isClickedLarge == true ? Color.black : Color.white)
                     .cornerRadius(50)
-                    .padding(.horizontal)
-                }
+                    
+                    Button(action: {
+                        
+                        if isClickedLarge == false {
+                            isShowDefaultImage = true
+                        }
+                        
+                        isClickedSmall = false
+                        isClickedMedium = false
+                        isClickedLarge = false
+                        isClickedXLarge = !isClickedXLarge
+                        isClickedXXLarge = false
+                        
+                    }) {
+                        Text("XL")
+                    }
+                    .foregroundColor(isClickedLarge == true ? Color.white : Color.black)
+                    .frame(width: 40, height: 40)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .background(isClickedLarge == true ? Color.black : Color.white)
+                    .cornerRadius(50)
+                    
+                    Button(action: {
+                        
+                        if isClickedLarge == false {
+                            isShowDefaultImage = true
+                        }
+                        
+                        isClickedSmall = false
+                        isClickedMedium = false
+                        isClickedLarge = false
+                        isClickedXLarge = false
+                        isClickedXXLarge = !isClickedXXLarge
+                        
+                    }) {
+                        Text("2XL")
+                    }
+                    .foregroundColor(isClickedLarge == true ? Color.white : Color.black)
+                    .frame(width: 40, height: 40)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .background(isClickedLarge == true ? Color.black : Color.white)
+                    .cornerRadius(50)
+                }.padding(.vertical)
                 
                 Text((item.name) + "\n")
                     .font(.headline)
