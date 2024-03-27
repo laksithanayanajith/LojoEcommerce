@@ -16,17 +16,23 @@ struct ContentView: View {
         NavigationView{
             TabView(selection: $tabSelection){
                 
-                NavigationLink(destination: HomeView()){
-                    HomeView().tag(1)
-                }
-                
-                NavigationLink(destination: SearchView()){
-                    SearchView().tag(2)
-                }
-                
-                NavigationLink(destination: CartView()){
-                    CartView().tag(3)
-                }
+                HomeView()
+                    .tabItem {
+                            Text("Home")
+                        }
+                    .tag(1)
+                                
+                SearchView()
+                    .tabItem {
+                            Text("Search")
+                        }
+                    .tag(2)
+                                
+                CartView()
+                    .tabItem {
+                            Text("Cart")
+                        }
+                    .tag(3)
             }
             
             .overlay(alignment: .bottom){
