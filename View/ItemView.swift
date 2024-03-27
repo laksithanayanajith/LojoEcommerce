@@ -20,6 +20,7 @@ struct ItemView: View {
     @State private var isClickedXXLarge: Bool = false
     
     var body: some View {
+        
         VStack {
             if isLoading {
                 ProgressView()
@@ -37,7 +38,15 @@ struct ItemView: View {
                 }
                 else{
                     
-                   //write code here for get required image url when click "S" or "M" or "L" button
+                    if let imageURL = URL(string: "https://img.freepik.com/premium-vector/sold-out-stamp-design-black-color_500223-261.jpg?w=2000") {
+                        URLImage(imageURL) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                    }
                 }
                 
                 HStack{
@@ -116,7 +125,7 @@ struct ItemView: View {
                     
                     Button(action: {
                         
-                        if isClickedLarge == false {
+                        if isClickedXLarge == false {
                             isShowDefaultImage = true
                         }
                         
@@ -129,19 +138,19 @@ struct ItemView: View {
                     }) {
                         Text("XL")
                     }
-                    .foregroundColor(isClickedLarge == true ? Color.white : Color.black)
+                    .foregroundColor(isClickedXLarge == true ? Color.white : Color.black)
                     .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)
                     )
-                    .background(isClickedLarge == true ? Color.black : Color.white)
+                    .background(isClickedXLarge == true ? Color.black : Color.white)
                     .cornerRadius(50)
                     
                     Button(action: {
                         
-                        if isClickedLarge == false {
-                            isShowDefaultImage = true
+                        if isClickedXXLarge == false {
+                            isShowDefaultImage = false
                         }
                         
                         isClickedSmall = false
@@ -153,13 +162,13 @@ struct ItemView: View {
                     }) {
                         Text("2XL")
                     }
-                    .foregroundColor(isClickedLarge == true ? Color.white : Color.black)
+                    .foregroundColor(isClickedXXLarge == true ? Color.white : Color.black)
                     .frame(width: 40, height: 40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 50)
                             .stroke(Color.black, lineWidth: 1)
                     )
-                    .background(isClickedLarge == true ? Color.black : Color.white)
+                    .background(isClickedXXLarge == true ? Color.black : Color.white)
                     .cornerRadius(50)
                 }.padding(.vertical)
                 
@@ -173,26 +182,32 @@ struct ItemView: View {
                     .fontWeight(.bold)
                     .padding(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
                 Text(item.description)
+                    .foregroundColor(.black)
                     .font(.footnote)
                     .fontWeight(.medium)
                     .opacity(0.8)
+                    .padding(.horizontal, 19)
                 
-                Button(action: {
-                }) {
-                    Text("Add To Cart")
-                        .padding(15)
+                    Button(action: {
+                    }) {
+                        Text("Add To Cart")
+                            .padding(15)
+                            .foregroundColor(.white)
+                    }
+                    .disabled(!((isClickedSmall == true || isClickedMedium == true || isClickedLarge == true || isClickedXLarge == true || isClickedXXLarge == true) && isShowDefaultImage == true))
+                    .foregroundColor(Color.white)
+                    .frame(maxWidth: .infinity)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.black, lineWidth: 0)
+                    )
+                    .background((isClickedSmall == true || isClickedMedium == true || isClickedLarge == true || isClickedXLarge == true || isClickedXXLarge == true) && isShowDefaultImage == true ? Color.black : Color.gray)
+                    .cornerRadius(50)
+                    .opacity((isClickedSmall == true || isClickedMedium == true || isClickedLarge == true || isClickedXLarge == true || isClickedXXLarge == true) && isShowDefaultImage == true ? 1.0 : 0.6)
+                    .padding()
                 }
-                .foregroundColor(Color.white)
-                .frame(maxWidth: .infinity)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 50)
-                        .stroke(Color.black, lineWidth: 1)
-                )
-                .background(Color.black)
-                .cornerRadius(50)
-                .padding()
-            }
         }
         .padding()
         .onAppear {

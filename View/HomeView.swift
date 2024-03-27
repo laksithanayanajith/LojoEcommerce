@@ -13,6 +13,7 @@ struct HomeView: View {
     
     @State private var isLoading = true
     @State private var items: [ItemElement] = []
+    @State private var selectedTab: Int = 0
     
     var body: some View {
         ZStack {
