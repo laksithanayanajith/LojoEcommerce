@@ -44,7 +44,7 @@ struct WelcomeView: View {
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                     
-                    NavigationLink(destination: HomeView()) {
+                    NavigationLink(destination: ContentView()) {
                         Text("\n Explore Now")
                             .font(.callout)
                             .fontWeight(.light)

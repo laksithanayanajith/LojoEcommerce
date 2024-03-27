@@ -1,5 +1,5 @@
 //
-//  TabView.swift
+//  CustomTabView.swift
 //  LojoEcommerce
 //
 //  Created by NIBM-LAB04-PC05 on 2024-03-27.
@@ -8,7 +8,7 @@
 import SwiftUI
 import URLImage
 
-struct TabView: View {
+struct CustomTabView: View {
     
     @Binding var tabSelection: Int
     
@@ -52,7 +52,7 @@ struct TabView: View {
 }
 
 #Preview {
-    TabView(tabSelection: .constant(1))
+    CustomTabView(tabSelection: .constant(1))
         .previewLayout(.sizeThatFits)
         .padding(.vertical)
 }
