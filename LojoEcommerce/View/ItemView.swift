@@ -92,6 +92,8 @@ struct ItemView: View {
                         isClickedXLarge = false
                         isClickedXXLarge = false
                         
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Medium", itemID: item.id)
+                        
                     }) {
                         Text("M")
                     }
@@ -115,6 +117,8 @@ struct ItemView: View {
                         isClickedLarge = !isClickedLarge
                         isClickedXLarge = false
                         isClickedXXLarge = false
+                        
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Large", itemID: item.id)
                         
                     }) {
                         Text("L")
@@ -140,6 +144,8 @@ struct ItemView: View {
                         isClickedXLarge = !isClickedXLarge
                         isClickedXXLarge = false
                         
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "XL", itemID: item.id)
+                        
                     }) {
                         Text("XL")
                     }
@@ -163,6 +169,8 @@ struct ItemView: View {
                         isClickedLarge = false
                         isClickedXLarge = false
                         isClickedXXLarge = !isClickedXXLarge
+                        
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "2XL", itemID: item.id)
                         
                     }) {
                         Text("2XL")
