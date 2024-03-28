@@ -5,14 +5,51 @@
 //  Created by NIBM-LAB04-PC05 on 2024-03-27.
 //
 
+import Foundation
 import SwiftUI
 
 struct CartView: View {
+    
+    @State private var selectedItems: [SelectedItemElement] = []
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            ScrollView {
+                LazyVStack(spacing: 10) {
+                    ForEach(selectedItems) { selectedItem in
+                        CartItemView(selectedItem: selectedItem)
+                    }
+                }
+                .padding()
+            }
+        }
+        .onAppear {
+            Task {
+                await fetchSelectedItems { sitems in
+                    if let sitems = sitems {
+                        selectedItems = sitems
+                    }
+                }
+            }
+        }
     }
 }
 
-#Preview {
+struct CartItemView: View {
+    
+    var selectedItem: SelectedItemElement
+
+    var body: some View {
+        VStack {
+            Text("Name: \(selectedItem.quantity)")
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(10)
+    }
+}
+
+
+#Preview{
     CartView()
 }

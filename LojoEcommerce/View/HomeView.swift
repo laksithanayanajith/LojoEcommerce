@@ -47,7 +47,7 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(.horizontal)
                     }
                 }
