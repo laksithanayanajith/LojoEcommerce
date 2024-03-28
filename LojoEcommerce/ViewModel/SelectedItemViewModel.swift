@@ -51,7 +51,7 @@ func createSelectedItem(selectedItem: SelectedItemElement, completion: @escaping
     }
 }
 
-func fetchSelectedItems(completion: @escaping ([SelectedItemElement]?) -> Void) async {
+func fetchSelectedItems(completion: @escaping ([CartSelectedItemElement]?) -> Void) async {
     let urlString = "http://laksithanibm-001-site1.jtempurl.com/api/selectedItems"
     guard let url = URL(string: urlString) else {
         print("Invalid URL: \(urlString)")
@@ -80,7 +80,7 @@ func fetchSelectedItems(completion: @escaping ([SelectedItemElement]?) -> Void) 
         }
         
         do {
-            let items = try JSONDecoder().decode([SelectedItemElement].self, from: data)
+            let items = try JSONDecoder().decode([CartSelectedItemElement].self, from: data)
             completion(items)
         } catch {
             print("Error decoding JSON: \(error)")

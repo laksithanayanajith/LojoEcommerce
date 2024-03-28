@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CartView: View {
     
-    @State private var selectedItems: [SelectedItemElement] = []
+    @State private var selectedItems: [CartSelectedItemElement] = []
 
     var body: some View {
         ZStack {
@@ -37,11 +37,11 @@ struct CartView: View {
 
 struct CartItemView: View {
     
-    var selectedItem: SelectedItemElement
+    var selectedItem: CartSelectedItemElement
 
     var body: some View {
         VStack {
-            Text("Name: \(selectedItem.quantity)")
+            Text(selectedItem.selectedSize)
         }
         .padding()
         .background(Color.gray.opacity(0.1))

@@ -8,12 +8,23 @@
 import Foundation
 
 struct SelectedItemElement: Identifiable, Codable, Equatable {
-    let id, quantity: Int
+    let id, quantity: Int?
     let totalPrice: Double
     let selectedSize: String
-    let itemID: Int
-    let item: CurrentSelectedItemElement?
+    let itemID: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case id, quantity, totalPrice, selectedSize, itemID
+    }
+}
 
+struct CartSelectedItemElement: Identifiable, Codable, Equatable {
+    let id, quantity: Int?
+    let totalPrice: Double
+    let selectedSize: String
+    let itemID: Int?
+    let item: CurrentSelectedItemElement?
+    
     enum CodingKeys: String, CodingKey {
         case id, quantity, totalPrice, selectedSize, itemID, item
     }
@@ -25,9 +36,6 @@ struct CurrentSelectedItemElement: Identifiable, Codable, Equatable {
     let description: String
     let price: Double
     let category: String
-    let defaultImage: String
+    //let defaultImage: String
     let addedDate: String
-    let images: JSONNullItems?
-    let colors: JSONNullItems?
-    let sizes: JSONNullItems?
 }

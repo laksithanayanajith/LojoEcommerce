@@ -19,7 +19,6 @@ struct ItemView: View {
     @State private var isClickedXLarge: Bool = false
     @State private var isClickedXXLarge: Bool = false
     @State var selectedItem: SelectedItemElement?
-    @State var currentSelectedItem: CurrentSelectedItemElement?
     @State var showAlert: Bool?
     @State var alertMessage: String = "The selected jacket added to the cart now!"
     
@@ -67,18 +66,7 @@ struct ItemView: View {
                         isClickedXLarge = false
                         isClickedXXLarge = false
                         
-                        currentSelectedItem = CurrentSelectedItemElement(id: item.id,
-                                                                         name: item.name,
-                                                                         description: item.description,
-                                                                         price: item.price,
-                                                                         category: item.category,
-                                                                         defaultImage: item.defaultImage,
-                                                                         addedDate: item.addedDate,
-                                                                         images: item.images,
-                                                                         colors: item.colors,
-                                                                         sizes: item.sizes)
-                        
-                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Small", itemID: item.id, item: currentSelectedItem)
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Small", itemID: item.id)
                         
                     }) {
                         Text("S")
@@ -104,18 +92,7 @@ struct ItemView: View {
                         isClickedXLarge = false
                         isClickedXXLarge = false
                         
-                        currentSelectedItem = CurrentSelectedItemElement(id: item.id,
-                                                                         name: item.name,
-                                                                         description: item.description,
-                                                                         price: item.price,
-                                                                         category: item.category,
-                                                                         defaultImage: item.defaultImage,
-                                                                         addedDate: item.addedDate,
-                                                                         images: item.images,
-                                                                         colors: item.colors,
-                                                                         sizes: item.sizes)
-                        
-                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Medium", itemID: item.id, item: currentSelectedItem)
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Medium", itemID: item.id)
                         
                     }) {
                         Text("M")
@@ -141,18 +118,7 @@ struct ItemView: View {
                         isClickedXLarge = false
                         isClickedXXLarge = false
                         
-                        currentSelectedItem = CurrentSelectedItemElement(id: item.id,
-                                                                         name: item.name,
-                                                                         description: item.description,
-                                                                         price: item.price,
-                                                                         category: item.category,
-                                                                         defaultImage: item.defaultImage,
-                                                                         addedDate: item.addedDate,
-                                                                         images: item.images,
-                                                                         colors: item.colors,
-                                                                         sizes: item.sizes)
-                        
-                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Large", itemID: item.id, item: currentSelectedItem)
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Large", itemID: item.id)
                         
                     }) {
                         Text("L")
@@ -178,18 +144,7 @@ struct ItemView: View {
                         isClickedXLarge = !isClickedXLarge
                         isClickedXXLarge = false
                         
-                        currentSelectedItem = CurrentSelectedItemElement(id: item.id,
-                                                                         name: item.name,
-                                                                         description: item.description,
-                                                                         price: item.price,
-                                                                         category: item.category,
-                                                                         defaultImage: item.defaultImage,
-                                                                         addedDate: item.addedDate,
-                                                                         images: item.images,
-                                                                         colors: item.colors,
-                                                                         sizes: item.sizes)
-                        
-                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "XL", itemID: item.id, item: currentSelectedItem)
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "XL", itemID: item.id)
                         
                     }) {
                         Text("XL")
@@ -215,18 +170,7 @@ struct ItemView: View {
                         isClickedXLarge = false
                         isClickedXXLarge = !isClickedXXLarge
                         
-                        currentSelectedItem = CurrentSelectedItemElement(id: item.id,
-                                                                         name: item.name,
-                                                                         description: item.description,
-                                                                         price: item.price,
-                                                                         category: item.category,
-                                                                         defaultImage: item.defaultImage,
-                                                                         addedDate: item.addedDate,
-                                                                         images: item.images,
-                                                                         colors: item.colors,
-                                                                         sizes: item.sizes)
-                        
-                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "2XL", itemID: item.id, item: currentSelectedItem)
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "2XL", itemID: item.id)
                         
                     }) {
                         Text("2XL")
