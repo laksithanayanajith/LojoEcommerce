@@ -8,10 +8,10 @@
 import Foundation
 
 struct SelectedItemElement: Identifiable, Codable, Equatable {
-    let id, quantity: Int?
+    let id, quantity: Int
     let totalPrice: Double
     let selectedSize: String
-    let itemID: Int?
+    let itemID: Int
     
     enum CodingKeys: String, CodingKey {
         case id, quantity, totalPrice, selectedSize, itemID
