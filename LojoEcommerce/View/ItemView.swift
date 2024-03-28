@@ -20,7 +20,7 @@ struct ItemView: View {
     @State private var isClickedXXLarge: Bool = false
     @State var selectedItem: SelectedItemElement?
     @State var showAlert: Bool?
-    @State var successalertMessage: Bool = true
+    @State var alertMessage: String = "The selected jacket added to the cart now!"
     
     var body: some View {
         
@@ -198,14 +198,13 @@ struct ItemView: View {
                     Button(action: {
                         Task {
                             if let selectedItem = selectedItem {
-                                await createSelectedItem(selectedItem: selectedItem) { success in
-                                    if success {
+                                await createSelectedItem(selectedItem: selectedItem) { fail in
+                                    if fail == false {
                                         showAlert = true
-                                        successalertMessage = true
                                         print("Item added to cart successfully.")
                                     } else {
                                         showAlert = true
-                                        successalertMessage = false
+                                        alertMessage = "Can't add the selected one right now!"
                                         print("Failed to add item to cart.")
                                     }
                                 }
@@ -232,7 +231,7 @@ struct ItemView: View {
                         get: { showAlert ?? false },
                         set: { showAlert = $0 }
                     )) {
-                        Alert(title: Text("Add to Cart"), message: Text(successalertMessage == true ? "The selected jacket added to the cart now!" : "Can't add the selected jacket right now!"), dismissButton: .default(Text("OK")))
+                        Alert(title: Text("Add to Cart"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                     }
                     .padding()
                 }
