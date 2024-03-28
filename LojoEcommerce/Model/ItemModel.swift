@@ -14,7 +14,7 @@ struct ItemElement: Identifiable, Codable, Equatable {
     let category: String
     let defaultImage: String
     let addedDate: String
-    let selectedItem: JSONNullItems?
+    var selectedItem: SelectedItemElement?
     let images: JSONNullItems?
     let colors: JSONNullItems?
     let sizes: JSONNullItems?

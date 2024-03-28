@@ -18,6 +18,9 @@ struct ItemView: View {
     @State private var isClickedLarge: Bool = false
     @State private var isClickedXLarge: Bool = false
     @State private var isClickedXXLarge: Bool = false
+    @State var selectedItem: SelectedItemElement?
+    @State var showAlert: Bool?
+    @State var successalertMessage: Bool = true
     
     var body: some View {
         
@@ -62,6 +65,8 @@ struct ItemView: View {
                         isClickedLarge = false
                         isClickedXLarge = false
                         isClickedXXLarge = false
+                        
+                        selectedItem = SelectedItemElement(id: 0, quantity: 1, totalPrice: item.price, selectedSize: "Small", itemID: item.id)
                         
                     }) {
                         Text("S")
@@ -191,6 +196,23 @@ struct ItemView: View {
                     .padding(.horizontal, 19)
                 
                     Button(action: {
+                        Task {
+                            if let selectedItem = selectedItem {
+                                await createSelectedItem(selectedItem: selectedItem) { success in
+                                    if success {
+                                        showAlert = true
+                                        successalertMessage = true
+                                        print("Item added to cart successfully.")
+                                    } else {
+                                        showAlert = true
+                                        successalertMessage = false
+                                        print("Failed to add item to cart.")
+                                    }
+                                }
+                            } else {
+                                print("Cannot find selected item!")
+                            }
+                        }
                     }) {
                         Text("Add To Cart")
                             .padding(15)
@@ -206,6 +228,12 @@ struct ItemView: View {
                     .background((isClickedSmall == true || isClickedMedium == true || isClickedLarge == true || isClickedXLarge == true || isClickedXXLarge == true) && isShowDefaultImage == true ? Color.black : Color.gray)
                     .cornerRadius(50)
                     .opacity((isClickedSmall == true || isClickedMedium == true || isClickedLarge == true || isClickedXLarge == true || isClickedXXLarge == true) && isShowDefaultImage == true ? 1.0 : 0.6)
+                    .alert(isPresented: Binding<Bool>(
+                        get: { showAlert ?? false },
+                        set: { showAlert = $0 }
+                    )) {
+                        Alert(title: Text("Add to Cart"), message: Text(successalertMessage == true ? "The selected jacket added to the cart now!" : "Can't add the selected jacket right now!"), dismissButton: .default(Text("OK")))
+                    }
                     .padding()
                 }
         }
@@ -224,7 +252,7 @@ struct ItemView: View {
 struct ItemView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ItemView(itemId: 1)
+            ItemView(itemId: 1, selectedItem: nil)
         }
     }
 }
