@@ -11,6 +11,7 @@ import SwiftUI
 struct CartView: View {
     
     @State private var selectedItems: [CartSelectedItemElement] = []
+    @State private var subtotal: Double?
     
     var body: some View {
         
@@ -43,14 +44,44 @@ struct CartView: View {
                         }
                     }
                 }
+                
+                fetchSubTotal { fetchedSubtotal in
+                                        subtotal = fetchedSubtotal
+                                    }
             }
             
-            Text("Total:")
-                .foregroundColor(.black)
-                .font(.title)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.leading)
-                .padding(.horizontal)
+            if let subtotal = subtotal {
+                
+                Text("Total Amount")
+                    .foregroundColor(.gray)
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal)
+                
+                            Text("$\(subtotal)")
+                                .foregroundColor(.black)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .multilineTextAlignment(.leading)
+                                .padding(.horizontal)
+                        }
+            
+            Button(action: {
+            }) {
+                Text("Checkout")
+                    .padding(15)
+                    .foregroundColor(.white)
+            }
+            .foregroundColor(Color.white)
+            .frame(maxWidth: .infinity)
+            .overlay(
+                RoundedRectangle(cornerRadius: 50)
+                    .stroke(Color.black, lineWidth: 0)
+            )
+            .background(.black)
+            .cornerRadius(50)
+            .padding()
         }
     }
 }
@@ -107,12 +138,15 @@ struct CartItemView: View {
                                     let totalPrice = price * Double(incrementQuantity == 0 ? quantity : quantity + incrementQuantity + 1)
 
                                     // Create a new CartSelectedItemElement with the updated quantity and total price
-                                    let updatedSelectedItem = CartSelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid, item: nil)
+                                    let updatedSelectedItem = SelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid)
                                     
                                     Task {
                                         await updateSelectedItem(id: id, selectedItem: updatedSelectedItem) { success in
                                             if success {
                                                 print("Updated!")
+                                            }
+                                            else{
+                                                print("Not updated!")
                                             }
                                         }
                                     }
@@ -155,12 +189,15 @@ struct CartItemView: View {
                                     let totalPrice = price * Double(incrementQuantity == 0 ? quantity : quantity + incrementQuantity + 1)
 
                                     // Create a new CartSelectedItemElement with the updated quantity and total price
-                                    let updatedSelectedItem = CartSelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid, item: nil)
+                                    let updatedSelectedItem = SelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid)
                                     
                                     Task {
                                         await updateSelectedItem(id: id, selectedItem: updatedSelectedItem) { success in
                                             if success {
                                                 print("Updated!")
+                                            }
+                                            else{
+                                                print("Not updated!")
                                             }
                                         }
                                     }

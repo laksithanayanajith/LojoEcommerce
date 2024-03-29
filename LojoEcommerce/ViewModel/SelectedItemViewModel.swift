@@ -137,7 +137,7 @@ func deleteSelectedItem(id: Int, completion: @escaping (Bool) -> Void) async {
     }
 }
 
-func updateSelectedItem(id: Int, selectedItem: CartSelectedItemElement, completion: @escaping (Bool) -> Void) async {
+func updateSelectedItem(id: Int, selectedItem: SelectedItemElement, completion: @escaping (Bool) -> Void) async {
     let urlString = "http://laksithanibm-001-site1.jtempurl.com/api/selectedItems/\(id)"
     
     guard let url = URL(string: urlString) else {
@@ -198,6 +198,74 @@ func updateSelectedItem(id: Int, selectedItem: CartSelectedItemElement, completi
             // Failed to update
             print("Failed to update. Status code: \(httpResponse.statusCode)")
             completion(false)
+        }
+    }
+    
+    task.resume()
+}
+
+func fetchSubTotal(completion: @escaping (Double?) -> Void) {
+    let urlString = "http://laksithanibm-001-site1.jtempurl.com/api/selectedItems/subtotal"
+    
+    guard let url = URL(string: urlString) else {
+        print("Invalid URL: \(urlString)")
+        completion(nil)
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    
+    // Your username and password (consider secure storage for real applications)
+    let username = "11168044"
+    let password = "60-dayfreetrial"
+    
+    // Create a base64-encoded credential string
+    let loginString = "\(username):\(password)"
+    guard let loginData = loginString.data(using: .utf8) else {
+        print("Error encoding login data")
+        completion(nil)
+        return
+    }
+    let base64LoginData = loginData.base64EncodedString()
+    
+    // Attach the Authorization header with the basic authentication credentials
+    let authString = "Basic \(base64LoginData)"
+    request.setValue(authString, forHTTPHeaderField: "Authorization")
+    
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            print("Error fetching subtotal: \(error)")
+            completion(nil)
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("Invalid response from server")
+            completion(nil)
+            return
+        }
+        
+        guard let responseData = data else {
+            print("No data received")
+            completion(nil)
+            return
+        }
+        
+        if httpResponse.statusCode == 200 {
+            do {
+                // Decode the response data to extract the subtotal
+                let decoder = JSONDecoder()
+                let subtotalResponse = try decoder.decode(Double.self, from: responseData)
+                completion(subtotalResponse)
+            } catch {
+                print("Error decoding subtotal response: \(error)")
+                completion(nil)
+            }
+        } else {
+            // Failed to fetch subtotal
+            print("Failed to fetch subtotal. Status code: \(httpResponse.statusCode)")
+            completion(nil)
         }
     }
     
