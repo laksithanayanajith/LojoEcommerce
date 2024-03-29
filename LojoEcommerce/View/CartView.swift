@@ -11,7 +11,7 @@ import SwiftUI
 struct CartView: View {
     
     @State private var selectedItems: [CartSelectedItemElement] = []
-
+    
     var body: some View {
         
         VStack{
@@ -61,7 +61,7 @@ struct CartItemView: View {
     @State private var isShowSelectedItem: Bool = true
     @State var incrementQuantity: Int = 0
     @State private var showDeleteAlert: Bool = false
-
+    
     var body: some View {
         
         VStack(spacing: 10) {
@@ -97,6 +97,28 @@ struct CartItemView: View {
                         VStack(spacing: 5) {
                             Button(action: {
                                 incrementQuantity = incrementQuantity + 1
+                                
+                                if let id = selectedItem.id,
+                                   let quantity = selectedItem.quantity,
+                                   let price = selectedItem.item?.price,
+                                   let itemid = selectedItem.itemID {
+                                    
+                                    // Calculate the new total price based on the updated quantity
+                                    let totalPrice = price * Double(incrementQuantity == 0 ? quantity : quantity + incrementQuantity + 1)
+
+                                    // Create a new CartSelectedItemElement with the updated quantity and total price
+                                    let updatedSelectedItem = CartSelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid, item: nil)
+                                    
+                                    Task {
+                                        await updateSelectedItem(id: id, selectedItem: updatedSelectedItem) { success in
+                                            if success {
+                                                print("Updated!")
+                                            }
+                                        }
+                                    }
+                                }
+
+                                
                             }) {
                                 Text("+")
                                         .font(.headline)
@@ -123,6 +145,28 @@ struct CartItemView: View {
                                     incrementQuantity = 0
                                     showDeleteAlert = true
                                 }
+                                
+                                if let id = selectedItem.id,
+                                   let quantity = selectedItem.quantity,
+                                   let price = selectedItem.item?.price,
+                                   let itemid = selectedItem.itemID {
+                                    
+                                    // Calculate the new total price based on the updated quantity
+                                    let totalPrice = price * Double(incrementQuantity == 0 ? quantity : quantity + incrementQuantity + 1)
+
+                                    // Create a new CartSelectedItemElement with the updated quantity and total price
+                                    let updatedSelectedItem = CartSelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid, item: nil)
+                                    
+                                    Task {
+                                        await updateSelectedItem(id: id, selectedItem: updatedSelectedItem) { success in
+                                            if success {
+                                                print("Updated!")
+                                            }
+                                        }
+                                    }
+                                }
+
+                                
                             }) {
                                 Text("-")
                                         .font(.headline)
@@ -192,6 +236,7 @@ struct CartItemView: View {
         .padding(.horizontal)
     }
 }
+
 #Preview{
     CartView()
 }

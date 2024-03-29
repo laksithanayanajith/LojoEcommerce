@@ -136,3 +136,70 @@ func deleteSelectedItem(id: Int, completion: @escaping (Bool) -> Void) async {
         completion(false)
     }
 }
+
+func updateSelectedItem(id: Int, selectedItem: CartSelectedItemElement, completion: @escaping (Bool) -> Void) async {
+    let urlString = "http://laksithanibm-001-site1.jtempurl.com/api/selectedItems/\(id)"
+    
+    guard let url = URL(string: urlString) else {
+        print("Invalid URL: \(urlString)")
+        completion(false)
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "PUT"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    // Your username and password (consider secure storage for real applications)
+    let username = "11168044"
+    let password = "60-dayfreetrial"
+    
+    // Create a base64-encoded credential string
+    let loginString = "\(username):\(password)"
+    guard let loginData = loginString.data(using: .utf8) else {
+        print("Error encoding login data")
+        completion(false)
+        return
+    }
+    let base64LoginData = loginData.base64EncodedString()
+    
+    // Attach the Authorization header with the basic authentication credentials
+    let authString = "Basic \(base64LoginData)"
+    request.setValue(authString, forHTTPHeaderField: "Authorization")
+    
+    // Encode the selectedItem object as JSON data
+    do {
+        let encoder = JSONEncoder()
+        let jsonData = try encoder.encode(selectedItem)
+        request.httpBody = jsonData
+    } catch {
+        print("Error encoding selected item: \(error)")
+        completion(false)
+        return
+    }
+    
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            print("Error updating selected item: \(error)")
+            completion(false)
+            return
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("Invalid response from server")
+            completion(false)
+            return
+        }
+        
+        if httpResponse.statusCode == 200 {
+            // Successfully updated
+            completion(true)
+        } else {
+            // Failed to update
+            print("Failed to update. Status code: \(httpResponse.statusCode)")
+            completion(false)
+        }
+    }
+    
+    task.resume()
+}
