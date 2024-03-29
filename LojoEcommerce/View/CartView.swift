@@ -11,6 +11,7 @@ import SwiftUI
 struct CartView: View {
     
     @State private var selectedItems: [CartSelectedItemElement] = []
+    @State private var isShowSelectedItem: Bool = true
 
     var body: some View {
         ZStack {
@@ -49,14 +50,14 @@ struct CartItemView: View {
                             Text("\(name)\n")
                                 .font(.footnote)
                                 .fontWeight(.thin)
-                                .frame(width: 100)
+                                .frame(width: 150)
                                 .padding(.horizontal)
                         }
                         
                         Text("\(selectedItem.selectedSize)\n")
                             .font(.footnote)
                             .fontWeight(.medium)
-                            .frame(width: 200)
+                            .frame(width: 100)
                             .padding(.horizontal)
                     }
                     
@@ -65,25 +66,39 @@ struct CartItemView: View {
                             
                         }) {
                             Text("+")
-                                .fontWeight(.bold) // Corrected fontWeight value
+                                .fontWeight(.bold)
                                 .foregroundColor(.black)
-                                .border(Color.black) // You can directly use Color.black here
+                                .padding(5)
                         }
                         .overlay(
-                            RoundedRectangle(cornerRadius: 25) // Adjusted cornerRadius to half of frame width/height
+                            RoundedRectangle(cornerRadius: 25)
                                 .stroke(Color.black, lineWidth: 1)
                         )
                         .frame(width: 50, height: 50)
-                        .cornerRadius(25) // Set cornerRadius to half of frame width/height
+                        .cornerRadius(25)
                         
                         if let quantity = selectedItem.quantity {
                             Text("\(quantity)")
                                 .font(.footnote)
                                 .fontWeight(.medium)
                         }
+                        
+                        Button(action: {
+                            
+                        }) {
+                            Text("-")
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                                .padding(5)
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 25)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                        .frame(width: 50, height: 50)
+                        .cornerRadius(25)
                     }
                 }
-                .frame(width: .infinity)
                 
                 HStack{
                     
@@ -91,14 +106,41 @@ struct CartItemView: View {
                         Text("\(price)")
                             .font(.headline)
                             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                            .alignmentGuide(.leading) { _ in -15 }
                     }
                 }
+                
+                Button(action: {
+                    Task{
+                        if let id = selectedItem.id {
+                            await deleteSelectedItem(id: id) { success in
+                                if success {
+                                    print("Successfully deleted the item")
+                                } else {
+                                    // Handle deletion failure if needed
+                                    print("Failed to delete the item")
+                                }
+                            }
+                        } else {
+                            print("Error: selectedItem.id is nil")
+                            // Handle the case when selectedItem.id is nil
+                        }
+                        
+                    }
+                }) {
+                    Text("delete")
+                        .font(.footnote)
+                        .fontWeight(.bold)
+                        .foregroundColor(.red)
+                        .padding(5)
+                }
+
             }
         }
         .padding()
         .background(Color.gray.opacity(0.1))
         .cornerRadius(20)
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: 200)
     }
 }
 

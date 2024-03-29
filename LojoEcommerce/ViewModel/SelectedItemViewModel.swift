@@ -88,3 +88,51 @@ func fetchSelectedItems(completion: @escaping ([CartSelectedItemElement]?) -> Vo
         }
     }.resume()
 }
+
+func deleteSelectedItem(id: Int, completion: @escaping (Bool) -> Void) async {
+    let urlString = "http://laksithanibm-001-site1.jtempurl.com/api/selectedItems/\(id)"
+    guard let url = URL(string: urlString) else {
+        print("Invalid URL: \(urlString)")
+        completion(false)
+        return
+    }
+
+    var request = URLRequest(url: url)
+    request.httpMethod = "DELETE"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+    // Your username and password
+    let username = "11168044"
+    let password = "60-dayfreetrial"
+
+    // Create a base64-encoded credential string
+    let loginString = "\(username):\(password)"
+    let loginData = loginString.data(using: .utf8)!
+    let base64LoginData = loginData.base64EncodedString()
+
+    // Attach the Authorization header with the basic authentication credentials
+    let authString = "Basic \(base64LoginData)"
+    request.setValue(authString, forHTTPHeaderField: "Authorization")
+
+    do {
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            if httpResponse.statusCode == 204 {
+                // Successfully deleted
+                completion(true)
+            } else {
+                // Failed to delete
+                print("Failed to delete. Status code: \(httpResponse.statusCode)")
+                completion(false)
+            }
+        } else {
+            print("Invalid response from server")
+            completion(false)
+        }
+        
+    } catch {
+        print("Error deleting selected item: \(error)")
+        completion(false)
+    }
+}
