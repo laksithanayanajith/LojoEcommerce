@@ -11,27 +11,46 @@ import SwiftUI
 struct CartView: View {
     
     @State private var selectedItems: [CartSelectedItemElement] = []
-    //@State private var isShowSelectedItem: Bool = true
 
     var body: some View {
-        ZStack {
-            ScrollView {
-                LazyVStack(spacing: 10) {
-                    ForEach(selectedItems) { selectedItem in
-                        CartItemView(selectedItem: selectedItem)
+        
+        VStack{
+            
+            HStack{
+                Text("LOJO")
+                    .foregroundColor(.black)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+            
+            ZStack {
+                ScrollView {
+                    LazyVStack(spacing: 10) {
+                        ForEach(selectedItems) { selectedItem in
+                            CartItemView(selectedItem: selectedItem)
+                        }
+                    }
+                    .padding()
+                }
+            }
+            .onAppear {
+                Task {
+                    await fetchSelectedItems { sitems in
+                        if let sitems = sitems {
+                            selectedItems = sitems
+                        }
                     }
                 }
-                .padding()
             }
-        }
-        .onAppear {
-            Task {
-                await fetchSelectedItems { sitems in
-                    if let sitems = sitems {
-                        selectedItems = sitems
-                    }
-                }
-            }
+            
+            Text("Total:")
+                .foregroundColor(.black)
+                .font(.title)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal)
         }
     }
 }
@@ -40,10 +59,11 @@ struct CartItemView: View {
     
     @State var selectedItem: CartSelectedItemElement
     @State private var isShowSelectedItem: Bool = true
-    @State private var incrementQuantity: Int = 0
+    @State var incrementQuantity: Int = 0
     @State private var showDeleteAlert: Bool = false
 
     var body: some View {
+        
         VStack(spacing: 10) {
             if isShowSelectedItem {
                 VStack(spacing: 10) {
@@ -61,10 +81,16 @@ struct CartItemView: View {
                                 .foregroundColor(.orange)
                             
                             if let price = selectedItem.item?.price {
-                                Text("$\(price)")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                Spacer()
+                                
+                                if let currentQuantity = selectedItem.quantity {
+                                    
+                                    var totalPrice = price * Double(incrementQuantity == 0 ? currentQuantity : incrementQuantity + 1)
+                                    
+                                    Text("$\(totalPrice)")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                    Spacer()
+                                }
                             }
                         }
                         Spacer()
@@ -86,10 +112,13 @@ struct CartItemView: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(.primary)
                             }
+                            
+                            
+                            
                             Button(action: {
                                 
                                 incrementQuantity = incrementQuantity - 1
-                                
+
                                 if incrementQuantity < 0 {
                                     incrementQuantity = 0
                                     showDeleteAlert = true
@@ -160,10 +189,9 @@ struct CartItemView: View {
                 .cornerRadius(20)
             }
         }
-        .padding(.vertical)
+        .padding(.horizontal)
     }
 }
-
 #Preview{
     CartView()
 }
