@@ -12,6 +12,7 @@ struct CartView: View {
     
     @State private var selectedItems: [CartSelectedItemElement] = []
     @State private var subtotal: Double?
+    let subtotalUpdateInterval: TimeInterval = 1.0
     
     var body: some View {
         
@@ -45,9 +46,17 @@ struct CartView: View {
                     }
                 }
                 
+                // Fetch initial subtotal
                 fetchSubTotal { fetchedSubtotal in
-                                        subtotal = fetchedSubtotal
-                                    }
+                            subtotal = fetchedSubtotal
+                }
+                                
+                // Start updating subtotal every second
+                Timer.scheduledTimer(withTimeInterval: subtotalUpdateInterval, repeats: true) { timer in
+                    fetchSubTotal { fetchedSubtotal in
+                            subtotal = fetchedSubtotal
+                        }
+                }
             }
             
             if let subtotal = subtotal {
