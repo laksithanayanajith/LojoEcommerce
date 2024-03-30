@@ -193,6 +193,7 @@ func updateSelectedItem(id: Int, selectedItem: SelectedItemElement, completion: 
         
         if httpResponse.statusCode == 200 {
             // Successfully updated
+            print("Successfully updated. Status code: \(httpResponse.statusCode)")
             completion(true)
         } else {
             // Failed to update

@@ -36,6 +36,6 @@ struct CurrentSelectedItemElement: Identifiable, Codable, Equatable {
     let description: String
     let price: Double
     let category: String
-    //let defaultImage: String
+    let defaultImage: String
     let addedDate: String
 }

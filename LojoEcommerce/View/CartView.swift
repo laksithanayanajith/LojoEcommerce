@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import URLImage
 
 struct CartView: View {
     
     @State private var selectedItems: [CartSelectedItemElement] = []
     @State private var subtotal: Double?
+    @State private var totalPrices: [Double] = []
     let subtotalUpdateInterval: TimeInterval = 1.0
     
     var body: some View {
@@ -31,7 +33,7 @@ struct CartView: View {
                 ScrollView {
                     LazyVStack(spacing: 10) {
                         ForEach(selectedItems) { selectedItem in
-                            CartItemView(selectedItem: selectedItem)
+                            CartItemView(selectedItem: selectedItem, totalPrices: $totalPrices)
                         }
                     }
                     .padding()
@@ -42,24 +44,11 @@ struct CartView: View {
                     await fetchSelectedItems { sitems in
                         if let sitems = sitems {
                             selectedItems = sitems
+                            updateTotalPrices()
                         }
                     }
                 }
-                
-                // Fetch initial subtotal
-                fetchSubTotal { fetchedSubtotal in
-                            subtotal = fetchedSubtotal
-                }
-                                
-                // Start updating subtotal every second
-                Timer.scheduledTimer(withTimeInterval: subtotalUpdateInterval, repeats: true) { timer in
-                    fetchSubTotal { fetchedSubtotal in
-                            subtotal = fetchedSubtotal
-                        }
-                }
             }
-            
-            if let subtotal = subtotal {
                 
                 Text("Total Amount")
                     .foregroundColor(.gray)
@@ -68,13 +57,12 @@ struct CartView: View {
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal)
                 
-                            Text("$\(subtotal)")
-                                .foregroundColor(.black)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .multilineTextAlignment(.leading)
-                                .padding(.horizontal)
-                        }
+                Text("$\(String(format: "%.2f", totalPrices.reduce(0, +)))")
+                    .foregroundColor(.black)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal)
             
             Button(action: {
             }) {
@@ -93,6 +81,17 @@ struct CartView: View {
             .padding()
         }
     }
+    
+    private func updateTotalPrices() {
+            var totalPrice: Double = 0.0
+            
+            for item in selectedItems {
+                if let price = item.item?.price, let quantity = item.quantity {
+                    totalPrice += price * Double(quantity)
+                }
+            }
+            totalPrices = [totalPrice]
+        }
 }
 
 struct CartItemView: View {
@@ -101,6 +100,7 @@ struct CartItemView: View {
     @State private var isShowSelectedItem: Bool = true
     @State var incrementQuantity: Int = 0
     @State private var showDeleteAlert: Bool = false
+    @Binding var totalPrices: [Double]
     
     var body: some View {
         
@@ -108,10 +108,22 @@ struct CartItemView: View {
             if isShowSelectedItem {
                 VStack(spacing: 10) {
                     HStack(spacing: 20) {
-                        VStack(alignment: .leading, spacing: 5) {
+                        
+                        if let defaultImage = selectedItem.item?.defaultImage {
+                                                    URLImage(URL(string: defaultImage)!) { image in
+                                                        image
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: 60, height: 60)
+                                                    }
+                                                    .cornerRadius(8)
+                                                }
+                        
+                        
+                        VStack(alignment: .leading, spacing: 1) {
                             if let name = selectedItem.item?.name {
                                 Text(name)
-                                    .font(.headline)
+                                    .font(.system(size: 12))
                                     .fontWeight(.thin)
                                     .foregroundColor(.primary)
                             }
@@ -124,43 +136,22 @@ struct CartItemView: View {
                                 
                                 if let currentQuantity = selectedItem.quantity {
                                     
-                                    var totalPrice = price * Double(incrementQuantity == 0 ? currentQuantity : incrementQuantity + 1)
-                                    
-                                    Text("$\(totalPrice)")
-                                        .font(.headline)
-                                        .fontWeight(.bold)
-                                    Spacer()
+                                    let formattedPrice = String(format: "$%.2f", (price * Double(incrementQuantity == 0 ? currentQuantity : incrementQuantity + 1)))
+                                            
+                                            Text(formattedPrice)
+                                                .font(.headline)
+                                                .fontWeight(.bold)
                                 }
                             }
                         }
                         Spacer()
                         VStack(spacing: 5) {
                             Button(action: {
-                                incrementQuantity = incrementQuantity + 1
-                                
-                                if let id = selectedItem.id,
-                                   let quantity = selectedItem.quantity,
-                                   let price = selectedItem.item?.price,
-                                   let itemid = selectedItem.itemID {
-                                    
-                                    // Calculate the new total price based on the updated quantity
-                                    let totalPrice = price * Double(incrementQuantity == 0 ? quantity : quantity + incrementQuantity + 1)
-
-                                    // Create a new CartSelectedItemElement with the updated quantity and total price
-                                    let updatedSelectedItem = SelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid)
-                                    
-                                    Task {
-                                        await updateSelectedItem(id: id, selectedItem: updatedSelectedItem) { success in
-                                            if success {
-                                                print("Updated!")
-                                            }
-                                            else{
-                                                print("Not updated!")
-                                            }
-                                        }
-                                    }
+                                incrementQuantity += 1
+                                if var quantity = selectedItem.quantity{
+                                    quantity = quantity + 1
+                                    updateTotalPrices()
                                 }
-
                                 
                             }) {
                                 Text("+")
@@ -178,40 +169,18 @@ struct CartItemView: View {
                                     .foregroundColor(.primary)
                             }
                             
-                            
-                            
                             Button(action: {
                                 
-                                incrementQuantity = incrementQuantity - 1
-
-                                if incrementQuantity < 0 {
-                                    incrementQuantity = 0
-                                    showDeleteAlert = true
-                                }
-                                
-                                if let id = selectedItem.id,
-                                   let quantity = selectedItem.quantity,
-                                   let price = selectedItem.item?.price,
-                                   let itemid = selectedItem.itemID {
-                                    
-                                    // Calculate the new total price based on the updated quantity
-                                    let totalPrice = price * Double(incrementQuantity == 0 ? quantity : quantity + incrementQuantity + 1)
-
-                                    // Create a new CartSelectedItemElement with the updated quantity and total price
-                                    let updatedSelectedItem = SelectedItemElement(id: id, quantity: quantity + incrementQuantity, totalPrice: totalPrice, selectedSize: selectedItem.selectedSize, itemID: itemid)
-                                    
-                                    Task {
-                                        await updateSelectedItem(id: id, selectedItem: updatedSelectedItem) { success in
-                                            if success {
-                                                print("Updated!")
-                                            }
-                                            else{
-                                                print("Not updated!")
-                                            }
-                                        }
+                                if incrementQuantity > 0 {
+                                    if var quantity = selectedItem.quantity{
+                                        quantity = quantity - 1
+                                        incrementQuantity -= 1
+                                        updateTotalPrices()
                                     }
                                 }
-
+                                else{
+                                    showDeleteAlert = true
+                                }
                                 
                             }) {
                                 Text("-")
@@ -281,6 +250,19 @@ struct CartItemView: View {
         }
         .padding(.horizontal)
     }
+    
+    private func updateTotalPrices() {
+            DispatchQueue.main.async {
+                var totalPrice: Double = 0.0
+                
+                if let price = selectedItem.item?.price, let quantity = selectedItem.quantity {
+                    totalPrice += price * Double(quantity + incrementQuantity)
+                }
+                
+                // Update total prices
+                totalPrices = [totalPrice]
+            }
+        }
 }
 
 #Preview{
