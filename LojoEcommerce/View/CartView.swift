@@ -14,72 +14,147 @@ struct CartView: View {
     @State private var selectedItems: [CartSelectedItemElement] = []
     @State private var subtotal: Double?
     @State private var totalPrices: [Double] = []
-    let subtotalUpdateInterval: TimeInterval = 1.0
+    @State private var navigateToLoginView = false
+    @Binding var isUserLogged: Bool
     
     var body: some View {
         
-        VStack{
-            
-            HStack{
-                Text("LOJO")
-                    .foregroundColor(.black)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                    .padding()
-            }
-            
-            ZStack {
-                ScrollView {
-                    LazyVStack(spacing: 10) {
-                        ForEach(selectedItems) { selectedItem in
-                            CartItemView(selectedItem: selectedItem, totalPrices: $totalPrices)
-                        }
-                    }
-                    .padding()
-                }
-            }
-            .onAppear {
-                Task {
-                    await fetchSelectedItems { sitems in
-                        if let sitems = sitems {
-                            selectedItems = sitems
-                            updateTotalPrices()
-                        }
+        NavigationView{
+            VStack{
+                
+                if totalPrices.reduce(0, +) > 0.00 {
+                    HStack{
+                        Text("LOJO")
+                            .foregroundColor(.black)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                            .padding()
                     }
                 }
-            }
                 
-                Text("Total Amount")
-                    .foregroundColor(.gray)
-                    .font(.footnote)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.leading)
-                    .padding(.horizontal)
+                if totalPrices.reduce(0, +) <= 0.00 {
+                    VStack {
+                        
+                        URLImage(URL(string: "https://cdn-icons-png.flaticon.com/512/4555/4555971.png")!) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 60, height: 60)
+                        }
+                        .cornerRadius(8)
+                        .opacity(0.2)
+                        
+                        Text("\nYour cart is Empty!")
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                            .opacity(0.8)
+                            .padding(.horizontal)
+                        
+                        Text("Discover new styles and accessories to elevate your wardrobe!")
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                            .fontWeight(.thin)
+                            .multilineTextAlignment(.center)
+                            .opacity(0.8)
+                            .padding()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+                }
+
+                ZStack {
+                    ScrollView {
+                        LazyVStack(spacing: 10) {
+                            ForEach(selectedItems) { selectedItem in
+                                if !totalPrices.isEmpty{
+                                    CartItemView(selectedItem: selectedItem, totalPrices: $totalPrices)
+                                }
+                            }
+                        }
+                        .padding()
+                    }
+                }
+                .onReceive(Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()) { _ in
+                    Task {
+                        await fetchSelectedItems { sitems in
+                            if let sitems = sitems {
+                                selectedItems = sitems
+                            }
+                        }
+                    }
+                }
+                .onAppear {
+                    Task {
+                        await fetchSelectedItems { sitems in
+                            if let sitems = sitems {
+                                selectedItems = sitems
+                                updateTotalPrices()
+                            }
+                        }
+                    }
+                }
+                    
+                if totalPrices.reduce(0, +) > 0.00 {
+                    Text("Total Amount")
+                        .foregroundColor(.gray)
+                        .font(.footnote)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal)
+                    
+                    Text("$\(String(format: "%.2f", totalPrices.reduce(0, +)))")
+                        .foregroundColor(.black)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal)
+                    
+                    if totalPrices.reduce(0, +) > 0.00 {
+                        NavigationLink(destination: LoginView(), isActive: $navigateToLoginView) {
+                            EmptyView()
+                        }
+                        .hidden()
+                    }
                 
-                Text("$\(String(format: "%.2f", totalPrices.reduce(0, +)))")
-                    .foregroundColor(.black)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.leading)
-                    .padding(.horizontal)
-            
-            Button(action: {
-            }) {
-                Text("Checkout")
-                    .padding(15)
-                    .foregroundColor(.white)
+                    NavigationLink(destination: LoginView()){
+                        Button(action: {
+                            navigateToLoginView = true
+                        }) {
+                            HStack{
+                                Text(isUserLogged == true ? "Checkout with" : "Checkout")
+                                    .padding(15)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal)
+                                
+                                if isUserLogged == true {
+                                    URLImage(URL(string: "https://www.pngall.com/wp-content/uploads/15/Apple-Pay-Logo-PNG-Image-File.png")!) { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 40, height: 40)
+                                    }
+                                    .cornerRadius(8)
+                                    .padding(.horizontal)
+                                }
+                            }
+                        }
+                        .foregroundColor(Color.white)
+                        .frame(maxWidth: .infinity)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 50)
+                                .stroke(Color.black, lineWidth: 0)
+                        )
+                        .background(.black)
+                        .cornerRadius(50)
+                        .padding()
+                    }
+                }
             }
-            .foregroundColor(Color.white)
-            .frame(maxWidth: .infinity)
-            .overlay(
-                RoundedRectangle(cornerRadius: 50)
-                    .stroke(Color.black, lineWidth: 0)
-            )
-            .background(.black)
-            .cornerRadius(50)
-            .padding()
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     private func updateTotalPrices() {
@@ -91,6 +166,8 @@ struct CartView: View {
                 }
             }
             totalPrices = [totalPrice]
+        totalPrices = [totalPrice]
+                NotificationCenter.default.post(name: Notification.Name("UpdateCartCount"), object: nil)
         }
 }
 
@@ -266,5 +343,5 @@ struct CartItemView: View {
 }
 
 #Preview{
-    CartView()
+    CartView(isUserLogged: .constant(false))
 }

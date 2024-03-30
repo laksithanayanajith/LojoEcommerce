@@ -11,6 +11,7 @@ import URLImage
 struct CustomTabView: View {
     
     @Binding var tabSelection: Int
+    @State private var selectedItemsCount: Int = 0
     
     let tabBarItem: [(title: String, iconUrl: String)] = [
         ("home", "https://img.icons8.com/ios-filled/50/home.png"),
@@ -43,11 +44,47 @@ struct CustomTabView: View {
                             Spacer()
                         }
                     }
+                    
+                    if index == 2 {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 50)
+                                .foregroundColor(.black)
+                                .frame(width: selectedItemsCount < 9 ? 30 : 60, height: 30)
+                            Text(String(selectedItemsCount))
+                                .font(.callout)
+                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                .foregroundColor(.orange)
+                                .padding(.horizontal)
+                        }
+                        .padding(.horizontal,-20)
+                    }
                 }
             }
             .frame(height: 60)
         }
         .foregroundColor(.clear)
+        .onReceive(Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()) { _ in
+            Task{
+                await fetchSelectedItems { items in
+                            if let items = items {
+                                DispatchQueue.main.async {
+                                    selectedItemsCount = items.count
+                                }
+                            }
+                        }
+            }
+        }
+        .onAppear{
+            Task{
+                await fetchSelectedItems { items in
+                            if let items = items {
+                                DispatchQueue.main.async {
+                                    selectedItemsCount = items.count
+                                }
+                            }
+                        }
+            }
+        }
     }
 }
 

@@ -28,7 +28,7 @@ struct ContentView: View {
                         }
                     .tag(2)
                                 
-                CartView()
+                CartView(isUserLogged: .constant(false))
                     .tabItem {
                             Text("Cart")
                         }

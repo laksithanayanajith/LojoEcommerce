@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E7A51C32BB7E588009E5F59 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A51C22BB7E588009E5F59 /* LoginView.swift */; };
+		0E7A51C52BB7F89A009E5F59 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E7A51C42BB7F89A009E5F59 /* SignUpView.swift */; };
 		258DD5922BB51A0B002721D7 /* SelectedItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258DD5912BB51A0B002721D7 /* SelectedItemModel.swift */; };
 		258DD5962BB51DF9002721D7 /* SelectedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258DD5952BB51DF9002721D7 /* SelectedItemViewModel.swift */; };
 		5166D1192BAC0CB90063BE17 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166D1182BAC0CB90063BE17 /* FilterView.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E7A51C22BB7E588009E5F59 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		0E7A51C42BB7F89A009E5F59 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		258DD5912BB51A0B002721D7 /* SelectedItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectedItemModel.swift; path = LojoEcommerce/Model/SelectedItemModel.swift; sourceTree = SOURCE_ROOT; };
 		258DD5952BB51DF9002721D7 /* SelectedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedItemViewModel.swift; sourceTree = "<group>"; };
 		5166D1182BAC0CB90063BE17 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 				519A67B12BB3DB1E00334CB2 /* CartView.swift */,
 				519A67B72BB4121900334CB2 /* ContentView.swift */,
 				519A67B92BB415E900334CB2 /* CustomTabView.swift */,
+				0E7A51C22BB7E588009E5F59 /* LoginView.swift */,
+				0E7A51C42BB7F89A009E5F59 /* SignUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -229,8 +235,10 @@
 				51CB5DA32BAABE1E000725ED /* ImageViewModel.swift in Sources */,
 				258DD5922BB51A0B002721D7 /* SelectedItemModel.swift in Sources */,
 				5166D1192BAC0CB90063BE17 /* FilterView.swift in Sources */,
+				0E7A51C52BB7F89A009E5F59 /* SignUpView.swift in Sources */,
 				519A67B82BB4121900334CB2 /* ContentView.swift in Sources */,
 				51CB5DA12BAAB9FA000725ED /* ImageModel.swift in Sources */,
+				0E7A51C32BB7E588009E5F59 /* LoginView.swift in Sources */,
 				519A67BA2BB415E900334CB2 /* CustomTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
